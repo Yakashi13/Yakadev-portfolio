@@ -1,0 +1,418 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yasas Vishmitha — Portfolio</title>
+  <meta name="description" content="Portfolio of Yasas Vishmitha — Web & Software Designer/Developer, Video Editor & Graphic Designer" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Color palette: indigo, electric blue, crimson, white only */
+      --indigo: #4f46e5;           /* Indigo 600 */
+      --indigo-800: #3730a3;       /* Darker indigo */
+      --electric: #00d1ff;         /* Electric blue */
+      --crimson: #dc143c;          /* Crimson */
+      --white: #ffffff;            /* White */
+      --glass: rgba(255, 255, 255, 0.08);
+      --glass-border: rgba(255, 255, 255, 0.18);
+      --text: rgba(255,255,255,0.92);
+      --muted: rgba(255,255,255,0.70);
+      --shadow: 0 10px 30px rgba(0,0,0,0.35);
+      --radius-2xl: 24px;
+    }* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: var(--text);
+  background: #0a0b14;
+  overflow-x: hidden;
+}
+
+/* Cyberpunk background (indigo/electric blue/crimson), animated grid + glow */
+.bg {
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(60vmax 60vmax at 10% 10%, rgba(79,70,229,0.20), transparent 60%),
+    radial-gradient(60vmax 60vmax at 90% 20%, rgba(0,209,255,0.18), transparent 60%),
+    radial-gradient(70vmax 70vmax at 50% 110%, rgba(220,20,60,0.20), transparent 60%),
+    linear-gradient(180deg, #0a0b14 0%, #0a0b14 40%, #0a0b14 100%);
+  filter: saturate(120%);
+}
+.scanlines {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 2px,
+      transparent 3px,
+      transparent 6px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(79,70,229,0.035) 0px,
+      rgba(79,70,229,0.035) 1px,
+      transparent 2px,
+      transparent 80px
+    );
+  animation: drift 18s linear infinite;
+}
+@keyframes drift { to { background-position: 0 600px, 600px 0; } }
+
+header {
+  position: sticky; top: 0; z-index: 50; backdrop-filter: blur(10px);
+  background: linear-gradient( to right, rgba(14,16,36,0.55), rgba(14,16,36,0.25) );
+  border-bottom: 1px solid var(--glass-border);
+}
+.container {
+  width: min(1100px, 92vw);
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.brand {
+  display: flex; align-items: center; gap: 14px; padding: 10px 0;
+}
+.brand .dot {
+  width: 14px; height: 14px; border-radius: 999px;
+  background: radial-gradient(circle at 30% 30%, var(--electric), var(--indigo));
+  box-shadow: 0 0 18px var(--electric), 0 0 28px rgba(0,209,255,0.6);
+}
+.brand h1 { font-size: 1.15rem; letter-spacing: 0.5px; margin: 0; font-weight: 700; }
+
+nav {
+  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+}
+.nav {
+  display: flex; gap: 10px; flex-wrap: wrap;
+}
+.chip {
+  padding: 10px 14px; border-radius: 999px; font-size: 0.9rem; text-decoration: none; color: var(--white);
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.chip:hover { transform: translateY(-2px); border-color: rgba(0,209,255,0.45); box-shadow: 0 10px 30px rgba(0,209,255,0.18); }
+
+.hero {
+  padding: 48px 0 26px; position: relative;
+}
+.hero-card {
+  border-radius: var(--radius-2xl);
+  padding: clamp(20px, 3.6vw, 42px);
+  background: linear-gradient( 145deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) );
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px) saturate(120%);
+  box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+}
+.hero-card::before {
+  content: ""; position: absolute; inset: -2px; border-radius: inherit; padding: 1px;
+  background: linear-gradient( 135deg, rgba(79,70,229,0.70), rgba(0,209,255,0.85), rgba(220,20,60,0.75) );
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none;
+}
+.title { font-size: clamp(1.6rem, 3.6vw, 2.6rem); font-weight: 900; margin: 0; }
+.subtitle { font-size: clamp(1rem, 2.2vw, 1.15rem); color: var(--muted); margin-top: 8px; }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 22px; margin-top: 22px;
+}
+@media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+.card {
+  border-radius: var(--radius-2xl);
+  padding: 18px 18px 16px 18px;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px) saturate(120%);
+  box-shadow: var(--shadow);
+  position: relative; overflow: hidden;
+}
+.card h3 {
+  margin: 0 0 12px 0; font-size: 1.05rem; font-weight: 800; letter-spacing: .3px;
+  background: linear-gradient(90deg, var(--white), var(--electric));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.section {
+  display: grid; gap: 12px; margin-top: 12px;
+}
+.pill {
+  display: inline-flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 999px; font-size: .95rem;
+  background: linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+  border: 1px solid var(--glass-border);
+}
+
+ul.clean { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+ul.clean li { color: var(--muted); line-height: 1.55; }
+
+.timeline { display: grid; gap: 14px; }
+.entry { padding: 12px 14px; border-radius: 18px; background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); }
+.entry .when { font-weight: 700; color: var(--electric); letter-spacing: .2px; }
+.entry .org { font-weight: 700; color: var(--white); }
+.entry .role { color: var(--muted); font-weight: 600; }
+.entry ul { margin: 8px 0 0 0; padding-left: 18px; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 10px; }
+.tag {
+  padding: 8px 12px; border-radius: 999px; font-size: .92rem; font-weight: 600; color: var(--white);
+  background: linear-gradient(135deg, rgba(79,70,229,0.65), rgba(0,209,255,0.65));
+  border: 1px solid rgba(255,255,255,0.22);
+  box-shadow: 0 6px 16px rgba(0,209,255,0.15);
+}
+.tag.crimson { background: linear-gradient(135deg, rgba(220,20,60,0.75), rgba(79,70,229,0.60)); }
+
+.footer { text-align: center; opacity: .7; font-size: .9rem; padding: 28px 0 60px; }
+
+/* Accent buttons */
+.btn {
+  display: inline-flex; gap: 10px; align-items: center; padding: 12px 16px; border-radius: 14px; text-decoration: none; color: var(--white);
+  background: linear-gradient(135deg, var(--indigo), var(--electric));
+  border: 1px solid rgba(255,255,255,0.24);
+  box-shadow: 0 10px 24px rgba(79,70,229,0.35);
+  font-weight: 700;
+  transition: transform .15s ease, box-shadow .2s ease;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,209,255,0.28); }
+
+/* Tiny accent separators */
+.divider { height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent); margin: 10px 0 6px; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .5s ease; }
+.reveal.show { opacity: 1; transform: translateY(0); }
+
+a { color: var(--electric); }
+.highlight { color: var(--crimson); font-weight: 800; }
+
+/* Print-friendly */
+@media print {
+  header, .scanlines, .bg { display: none !important; }
+  body { background: #fff; color: #000; }
+  .card, .hero-card { box-shadow: none; backdrop-filter: none; background: #fff; border: 1px solid #000; }
+  a { color: #000; text-decoration: underline; }
+}
+
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="scanlines"></div>  <header>
+    <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:16px;">
+      <div class="brand">
+        <div class="dot"></div>
+        <h1>Yasas Vishmitha</h1>
+      </div>
+      <nav class="nav" aria-label="Primary">
+        <a class="chip" href="#about">About</a>
+        <a class="chip" href="#experience">Experience</a>
+        <a class="chip" href="#skills">Skills</a>
+        <a class="chip" href="#education">Education</a>
+        <a class="chip" href="#hobbies">Hobbies</a>
+        <a class="chip" href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>  <main class="container">
+    <section class="hero reveal" id="top">
+      <div class="hero-card">
+        <h2 class="title">YASAS <span class="highlight">VISHMITHA</span></h2>
+        <p class="subtitle">Web & Software Designer, Developer · Self‑taught Video Editor & Graphic Designer</p>
+        <div class="divider"></div>
+        <div class="grid" style="margin-top:18px;">
+          <div class="card" id="about">
+            <h3>About Me</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.7;">
+              Hi, I'm <strong>Vishmitha</strong> — a playful yet focused software developer and designer from Sri Lanka, with a passion for front‑end development and creative UI/UX. I enjoy crafting unique, user‑loved digital experiences while keeping things light and collaborative at work. I’ve worked with international clients, blending tech and design to meet their exact needs. Beyond code, I dive into graphic design, AI image generation, and photo editing. Always curious, always learning — especially when it comes to mixing creativity with the power of AI.
+            </p>
+            <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+              <a class="btn" href="#contact" aria-label="Jump to Contact">Get in touch</a>
+              <a class="btn" style="background: linear-gradient(135deg, var(--crimson), var(--indigo)); box-shadow: 0 10px 24px rgba(220,20,60,0.35);" href="#experience">View Experience</a>
+            </div>
+          </div>
+          <aside class="card" id="contact">
+            <h3>Contact</h3>
+            <div class="section">
+              <div class="pill">📞 +94 72 760 5592</div>
+              <div class="pill">📧 <a href="mailto:yasas13.dev@gmail.com">yasas13.dev@gmail.com</a></div>
+              <div class="pill">📍 No 25, Vijesekara Place, Kalutara South</div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section><section class="grid reveal" id="experience">
+  <div class="card">
+    <h3>Experience</h3>
+    <div class="timeline">
+      <div class="entry">
+        <div class="when">2024 – Present</div>
+        <div class="org">Video/Photo Editor, Graphic Designer & Social Media Management</div>
+        <div class="role">Freelance</div>
+        <ul>
+          <li>Freelance contribution for GitHub projects (for modern Front‑End learning and practice).</li>
+          <li>Video editing, graphic designing & photo editing using artificial intelligence tools.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="when">2023 – 2024</div>
+        <div class="org">Buddhist and Pali University of Sri Lanka</div>
+        <div class="role">Requirement gathering, system design and development</div>
+        <ul>
+          <li>On‑site visits to gather requirements for the management system.</li>
+          <li>Designed and developed modules for the university management information system.</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="when">2023 – 2024</div>
+        <div class="org">Arthur C. Clark Institute for Modern Technologies (ACCIMT)</div>
+        <div class="role">Intern Software Developer</div>
+        <ul>
+          <li>Developed and directed software system testing.</li>
+          <li>Facilitated collaborative development with the team.</li>
+          <li>Implemented permission‑based access control to enhance system security.</li>
+          <li>Conducted system tests and handled day‑to‑day troubleshooting in a dynamic environment.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card" id="skills">
+    <h3>Skills</h3>
+    <div class="tags" aria-label="Primary Skills">
+      <span class="tag">HTML</span>
+      <span class="tag">CSS</span>
+      <span class="tag">JS</span>
+      <span class="tag">PHP</span>
+      <span class="tag">Bootstrap</span>
+      <span class="tag">Java</span>
+      <span class="tag">Android Studio</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">MongoDB</span>
+      <span class="tag">Node.js</span>
+      <span class="tag">Laravel (Basics)</span>
+      <span class="tag">GIT & GitHub</span>
+    </div>
+    <div class="divider"></div>
+    <h3 style="margin-top:12px;">Extra Skills</h3>
+    <div class="tags" aria-label="Extra Skills">
+      <span class="tag crimson">After Effects</span>
+      <span class="tag crimson">Photoshop</span>
+      <span class="tag crimson">Lightroom</span>
+      <span class="tag crimson">Canva</span>
+      <span class="tag crimson">Figma</span>
+      <span class="tag crimson">Picsart</span>
+      <span class="tag crimson">CapCut</span>
+      <span class="tag crimson">ChatGPT AI</span>
+      <span class="tag crimson">Leonardo AI</span>
+      <span class="tag crimson">Midjourney AI</span>
+    </div>
+  </aside>
+</section>
+
+<section class="grid reveal" id="education">
+  <div class="card">
+    <h3>Education</h3>
+    <div class="timeline">
+      <div class="entry">
+        <div class="when">2022 – 2023</div>
+        <div class="org">Vocational Training Authority</div>
+        <ul>
+          <li>Web and Software Developer — NVQ Level 4</li>
+          <li>English Language — NVQ Level 3</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="when">2019 – 2021</div>
+        <div class="org">K/ Dharmapala Maha Vidyalaya</div>
+        <ul>
+          <li>G.C.E. (A/L)</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="when">2018</div>
+        <div class="org">K/ Gnanodaya Maha Vidyalaya</div>
+        <ul>
+          <li>G.C.E. (O/L)</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card" id="hobbies">
+    <h3>Hobbies</h3>
+    <div class="timeline">
+      <div class="entry">
+        <div class="when">2015 – 2019 · Sportsmanship Karate</div>
+        <ul>
+          <li>Black Belt (1st Dan / Level)</li>
+          <li>International Championship (India – 2018)</li>
+        </ul>
+      </div>
+    </div>
+  </aside>
+</section>
+
+<section class="grid reveal" id="reference">
+  <div class="card">
+    <h3>Reference</h3>
+    <div class="timeline">
+      <div class="entry">
+        <div class="org">Ms. Chinthani Kulathunga</div>
+        <div class="role">Instructor – VTA Kalutara North</div>
+        <ul class="clean">
+          <li>📞 +94 71 682 0091</li>
+        </ul>
+      </div>
+      <div class="entry">
+        <div class="org">Mr. Rohana Dasanayaka</div>
+        <div class="role">IT Division Head + Author – C. Clark Institute for Modern Technologies (ACCIMT)</div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card" aria-label="Quick Links">
+    <h3>Quick Links</h3>
+    <ul class="clean">
+      <li><a href="#top">Back to top</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </aside>
+</section>
+
+<p class="footer">© <span id="year"></span> Yasas Vishmitha · Crafted with indigo, electric blue, crimson & white</p>
+
+  </main>  <script>
+    // Scroll reveal for cards
+    const reveal = () => {
+      const els = document.querySelectorAll('.reveal');
+      const trigger = window.innerHeight * 0.92;
+      els.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < trigger) el.classList.add('show');
+      });
+    };
+    document.addEventListener('scroll', reveal);
+    window.addEventListener('load', () => { reveal(); document.getElementById('year').textContent = new Date().getFullYear(); });
+
+    // Smooth anchor scroll (no extra libs)
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        const target = document.querySelector(id);
+        if (target) {
+          e.preventDefault();
+          window.scrollTo({ top: target.offsetTop - 70, behavior: 'smooth' });
+        }
+      });
+    });
+  </script></body>
+          </html>
