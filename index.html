@@ -3,8 +3,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0f1020" />
-  <title>YASAS VISHMITHA – Portfolio</title>
-  <meta name="description" content="Web & Software Designer/Developer • Video editor • graphic designer. [personal portfolio]" />
+  <title>Portfolio of Developer • Yasas Vishmitha.</title>
+  <meta name="description" content="Web & Software Designer, Developer • Video editor • graphic designer." />
   <style>
     /* -----------------------------
        Core variables & theme setup
@@ -92,7 +92,33 @@ header { position: sticky; top: 0; backdrop-filter: blur(10px); background: var(
 main { padding: 28px 0 80px; }
 
 /* Hero */
-.hero { display:grid; grid-template-columns: 160px 1fr; gap: 1.2rem; align-items:center; padding: 22px 0 10px; }
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (max-width: 720px) {
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .avatar {
+    margin: 1rem auto;
+    display: block;
+  }
+
+  .title .roles { 
+    justify-content: center; 
+  }
+  .socials { 
+    justify-content: center; 
+  }
+}
 .avatar { width: 150px; height:150px; border-radius:50%; object-fit:cover; border:2px solid rgba(255,255,255,.55); box-shadow: 0 10px 30px rgba(0,0,0,.35); }
 .title h1 { margin:0; font-size: clamp(1.6rem, 2vw + 1.2rem, 2.4rem); line-height:1.15; letter-spacing:.3px; }
 .title .roles { margin:.4rem 0 0; opacity:.9; font-weight:600; }
@@ -190,7 +216,8 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
       <img class="avatar" src="https://fv5-6.files.fm/thumb_show.php?i=fwgdatwzec&view&v=1&PHPSESSID=0f1b5842bcef1fafde1b11620491b49085c5e922" alt="Avatar of Yasas Vishmitha" width="150" height="150" loading="eager"/>
       <div class="title">
         <h1>YASAS VISHMITHA</h1>
-        <div class="roles">• Web & Software Designer, Developer • Self-taught Video Editor & Graphic Designer</div>
+        <div class="roles">• Web & Software Designer, Developer •</div>
+        <div class="roles">• Self-taught Video Editor & Graphic Designer •</div>
         <div class="badge" title="Sri Lanka">🇱🇰 Sri Lanka • Always curious • AI + Design</div>
         <div class="socials" aria-label="Social links">
           <a class="btn" style="--accent: #0866ff" href="https://www.facebook.com/share/1E1qaxnBtG/" target="_blank" rel="noopener">
@@ -218,6 +245,18 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.56l-.35 4.94c.5 0 .72-.22.98-.48l2.36-2.27 4.88 3.57c.9.5 1.53.24 1.77-.83l3.21-15.03c.29-1.36-.49-1.9-1.36-1.56L1.88 9.3C.56 9.82.58 10.57 1.66 10.9l4.97 1.55 11.56-7.3c.54-.36 1.03-.16.63.2l-9.78 10.22z"/></svg>
             Telegram
           </a>
+          <a class="btn" style="--accent:#e63946" 
+   a href="https://drive.google.com/uc?export=download&id=13dT1yT1xAcpywhDlQY46t5eHPuj5YqTR"
+   download>
+  <!-- File/Resume solid icon -->
+  <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 
+             2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 
+             18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 
+             9H13z"/>
+  </svg>
+  Get CV
+</a>
         </div>
       </div>
     </section><!-- About -->
