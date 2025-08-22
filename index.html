@@ -4,9 +4,38 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0f1020" />
-  <title>YASA's Portfolio</title>
-  <meta name="description" content="Web & Software Designer, Developer • Video editor • graphic designer." />
+  <title>YASA's – Portfolio</title>
+  <meta name="description" content="Web & Software designer, developer • Video editor • Graphic designer." />
+
   <style>
+  
+  html {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* momentum scroll on iOS */
+}
+
+/* Default header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  background: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
+  will-change: backdrop-filter, transform;
+}
+
+/* Shrinked header when scrolling */
+header.scrolled {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(20, 20, 20, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+  
     /* -----------------------------
        Core variables & theme setup
     ------------------------------*/
@@ -95,9 +124,19 @@ main { padding: 28px 0 80px; }
 /* Hero */
 .hero {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto 1fr;
   gap: 2rem;
   align-items: center;
+}
+
+.hero .avatar {
+  justify-self: center; /* centers avatar in its column */
+}
+
+.hero .title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* vertically center content */
 }
 
 @media (max-width: 720px) {
@@ -183,25 +222,193 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
 /* Accessibility helpers */
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); border:0; }
 
+
+
+/* --- Mobile styles --- */
+@media (max-width: 720px) {
+  .nav {
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .brand {
+    flex: 1;
+  }
+
+  .theme-toggle {
+    order: 2; /* theme toggle moves next to logo */
+  }
+
+  .links {
+    order: 3; 
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* or flex-start if you want */
+    gap: .7rem;
+    margin-top: .6rem;
+    padding-top: .6rem;
+    border-top: var(--glass-border);
+  }
+
+  .links a {
+    padding: .2rem 0;
+    width: 100%;
+  }
+}
+
+
+
+/* Reset nav default */
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Hide hamburger on desktop */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.menu-toggle .icon {
+  width: 26px;
+  height: 26px;
+  stroke: currentColor;
+  stroke-width: 2;
+  fill: none;
+}
+
+/* Mobile rules */
+@media (max-width: 720px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .links {
+    display: none; /* hidden by default */
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.5rem;
+    text-align: center;
+  }
+
+  .links.show {
+    display: flex;
+    
+  }
+}
+
+/* Scroll-to-top button */
+#scrollTopBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 48px;
+  height: 48px;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Glassmorphism */
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+
+  /* Effects */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+#scrollTopBtn.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+#scrollTopBtn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+
+
+/* Default: show links in row */
+.links {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Mobile view */
+@media (max-width: 720px) {
+  .links {
+    display: none !important; /* hidden by default */
+    flex-direction: column;
+    width: 100%;
+    margin-top: 0.5rem;
+    text-align: center;
+    gap: 0.75rem; /* spacing between items */
+
+    
+    background: none;
+    backdrop-filter: none;
+    border-radius: 0;
+    padding: 0;
+  }
+
+  .links.show {
+    display: flex !important; /* visible when toggled */
+  }
+}
+
+
+
   </style>
+
 </head>
 <body>
   <!-- abstract background layers -->
   <div class="bg-abstract"></div>
-  <div class="grid-overlay" aria-hidden="true"></div>  <header>
-    <div class="container nav">
-      <div class="brand">
-        <span class="logo-dot" aria-hidden="true"></span>
-        <a href="#top" aria-label="Home">VISHADRA</a>
-      </div>
-      <nav class="links" aria-label="Primary">
-        <a href="#about">• About </a>
-        <a href="#experience">• Experience </a>
-        <a href="#skills">• Skills </a>
-        <a href="#education">• Education </a>
-        <a href="#contact">• Contact </a>
-        <a href="#projects">• Projects (FYI)</a>
-      </nav>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+<header>
+  <div class="container nav">
+    <div class="brand">
+      <span class="logo-dot" aria-hidden="true"></span>
+      <a href="#top" aria-label="Home">ＶＩＳＨＡＤＲＡ</a>
+    </div>
+
+    <!-- Hamburger Menu Button -->
+    <button class="menu-toggle" id="menuToggle" aria-label="Toggle navigation">
+      <!-- Hamburger icon -->
+      <svg id="menuIcon" class="icon" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3 6h18M3 12h18M3 18h18"/>
+      </svg>
+      <!-- Close icon -->
+      <svg id="closeIcon" class="icon" viewBox="0 0 24 24" fill="currentColor" style="display:none">
+        <path d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </button>
+
+    <nav class="links" id="navLinks" aria-label="Primary">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+      <a href="#projects">Projects (FYI)</a>
+    </nav>
+
       <div class="theme-toggle">
         <button class="btn" id="themeBtn" aria-label="Toggle theme">
           <!-- Sun/Moon SVG -->
@@ -211,10 +418,14 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
         </button>
       </div>
     </div>
-  </header>  <main id="top" class="container">
+  </header>
+
+
+  <main id="top" class="container">
+    
     <!-- Hero -->
     <section class="hero">
-      <img class="avatar" src="https://fv5-6.files.fm/thumb_show.php?i=fwgdatwzec&view&v=1&PHPSESSID=0f1b5842bcef1fafde1b11620491b49085c5e922" alt="Avatar of Yasas Vishmitha" width="150" height="150" loading="eager"/>
+      <img class="avatar" src="https://fv5-6.files.fm/thumb_show.php?i=xc74pvcbhf&view&v=1&PHPSESSID=0f1b5842bcef1fafde1b11620491b49085c5e922" alt="Avatar of Yasas Vishmitha" width="150" height="150" loading="eager"/>
       <div class="title">
         <h1>YASAS VISHMITHA</h1>
         <div class="roles">• Web & Software Designer, Developer •</div>
@@ -261,6 +472,7 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
         </div>
       </div>
     </section>
+    
     <!-- About -->
 <section id="about" class="card">
   <h2 class="section-title">
@@ -270,21 +482,25 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
   <p>Hi, I'm Vishmitha. a playful yet focused software developer and designer from Sri Lanka. with a passion for front-end development and creative UI/UX. I enjoy crafting unique, user-loved digital experiences while keeping things light and collaborative at work. I’ve worked with international clients, blending tech and design to meet their exact needs. Beyond code, I dive into graphic design, AI image generation, and editing. Always curious, always learning; especially when it comes to mixing creativity with the power of AI.</p>
   <div class="chips" aria-label="Interests">
     <span class="chip">gaming</span>
-    <span class="chip">listen to music</span>
+    <span class="chip">music</span>
     <span class="chip">demonology</span>
     <span class="chip">angelology</span>
     <span class="chip">mythology</span>
     <span class="chip">Sci‑fi</span>
+    <span class="chip">anime</span>
+    <span class="chip">space</span>
     <span class="chip">digital arts</span>
+    <span class="chip">illistration</span>
     <span class="chip">Artificial intelligence</span>
     <span class="chip">traveling</span>
     <span class="chip">photography</span>
     <span class="chip">cinematography</span>
     <span class="chip">Movies</span>
+    <span class="chip">lores</span>
   </div>
 </section>
 
-    <!-- Highlights -->
+<!-- Highlights -->
 <section class="card" id="highlights">
   <h2 class="section-title">
     <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
@@ -373,39 +589,45 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
     PROJECTS
   </h2>
 
-  <div class="timeline">
-    <div class="item">
-      <!-- Description like Sinhala text -->
-      <div class="duties">
-        For your entertainment and records. Just check them. You won't regret it 😌.
-      </div>
+  <div class="project-row">
+    <div>
+      <h3>Some fun but interesting projects i did (ez). Just check them. You won't regret it 😌. more will be added sooner..</h3>
+    </div>
+    <div class="buttons">
+      
+      <!-- Main projects button -->
+      
+      <li>
+              <button class="btn button" style="--accent:#7df9ff" onclick="location.href='projects.html'">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/>
+        </svg>
+        Check Projects
+      </button>
+      </li>
 
-      <!-- Buttons like bars below -->
-      <div class="buttons">
-        <!-- Main projects button -->
-        <button class="btn button" style="--accent:#7df9ff" onclick="location.href='projects.html'">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/>
-          </svg>
-          Check Projects
-        </button>
+      <!-- Personal Blog button -->
+      
+      <li>
+              <button class="btn button" style="--accent:#dc143c" onclick="comingSoon()">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3a9 9 0 100 18 9 9 0 000-18zM11 7h2v6h-2V7zm0 8h2v2h-2v-2z"/>
+        </svg>
+        Personal Blog (Coming Soon!)
+      </button>
+      </li>
 
-        <!-- Personal Blog button -->
-        <button class="btn button" style="--accent:#dc143c" onclick="comingSoon()">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 3a9 9 0 100 18 9 9 0 000-18zM11 7h2v6h-2V7zm0 8h2v2h-2v-2z"/>
-          </svg>
-          Personal Blog (Coming Soon!)
-        </button>
+      <!-- Web Projects button -->
+      
+      <li>
+              <button class="btn button" style="--accent:#4b0082" onclick="comingSoon()">
+        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/>
+        </svg>
+        Web Projects (Coming Soon!)
+      </button>
+      </li>
 
-        <!-- Web Projects button -->
-        <button class="btn button" style="--accent:#4b0082" onclick="comingSoon()">
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/>
-          </svg>
-          Web Projects (Coming Soon!)
-        </button>
-      </div>
     </div>
   </div>
 </section>
@@ -419,59 +641,100 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
 
 <!-- Skills -->
 <section id="skills" class="card">
-  <h2 class="section-title">
-    <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z"/></svg>
-    Skills
-  </h2>
-  <div class="skill-grid" aria-label="Core skills">
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 18h16v-2H4v2zM3 5h18v10H3V5zm2 2v6h14V7H5z"/></svg> HTML</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v2H3V5zm0 6h18v2H3v-2zm0 6h18v2H3v-2z"/></svg> CSS</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 2h8v2H8V2zm-2 4h12v2H6V6zm-3 4h18v2H3v-2zm2 4h14v2H5v-2zm3 4h8v2H8v-2z"/></svg> JavaScript</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l10 6v8l-10 6L2 16V8l10-6zm0 2.18L4 8v8l8 4.82L20 16V8l-8-3.82z"/></svg> PHP</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v4H4V4zm0 6h7v10H4V10zm9 0h7v10h-7V10z"/></svg> Bootstrap</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 2h12v2H6zM4 6h16v2H4zm2 4h12v2H6zm-2 4h16v2H4zm2 4h12v2H6z"/></svg> Java</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 3h16v18H4V3zm2 2v14h12V5H6zm2 2h8v2H8V7zm0 4h8v2H8v-2z"/></svg> Android Studio</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v12H4V6zm2 2v8h12V8H6z"/></svg> MySQL</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l9 4v6c0 5-4 9-9 10C7 21 3 17 3 12V6l9-4z"/></svg> Node.js</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v14H3V5zm2 2v10h14V7H5zm2 2h10v6H7V9z"/></svg> Laravel (Basics)</div>
-    <div class="skill"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm-1 14H7v-2h4v2zm6 0h-4v-2h4v2zM8 10h8v2H8v-2z"/></svg> GIT & GitHub</div>
-  </div>
+  <!-- Front-End Development -->  
+  <h2 class="section-title">  
+    <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v2H3V5zm0 6h12v2H3v-2zm0 6h18v2H3v-2z"/></svg>  
+    Front-End Development  
+  </h2>  
+  <div class="skill-grid" aria-label="Front-End skills">  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M4 18h16v-2H4v2zM3 5h18v10H3V5z"/></svg> HTML</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M3 5h18v2H3v-2zM3 11h18v2H3v-2z"/></svg> CSS</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M8 2h8v2H8V2zM5 6h14v2H5V6zM3 10h18v2H3v-2z"/></svg> JavaScript</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M4 4h16v4H4V4zM4 10h8v10H4V10zM14 10h6v10h-6V10z"/></svg> Bootstrap</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M12 2l9 5v10l-9 5-9-5V7l9-5z"/></svg> React.js (Basics)</div>  
+  </div>  
 
-  <h3 class="section-title" style="margin-top:16px">
-    <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l4 7H8l4-7zm0 18a5 5 0 100-10 5 5 0 000 10z"/></svg>
-    Extra Skills
-  </h3>
-  <div class="chips">
-    <span class="chip">After Effects</span>
-    <span class="chip">Photoshop</span>
-    <span class="chip">Lightroom</span>
-    <span class="chip">Canva</span>
-    <span class="chip">Figma</span>
-    <span class="chip">Picsart</span>
-    <span class="chip">Capcut</span>
-    <span class="chip">ChatGPT</span>
-    <span class="chip">Leonardo AI</span>
-    <span class="chip">Midjourney AI</span>
-  </div>
+  <!-- UI/UX Design Tools -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zM7 10h10v2H7v-2zm0 4h6v2H7v-2z"/></svg>  
+    UI/UX Design Tools  
+  </h3>  
+  <div class="chips">  
+    <span class="chip">Figma</span>  
+    <span class="chip">Canva</span>  
+    <span class="chip">Dribbble</span>  
+    <span class="chip">npm</span>  
+    <span class="chip">Nicepage</span>  
+  </div>  
 
-  <h3 class="section-title" style="margin-top:16px">
-    <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h12v2H4v-2z"/></svg>
-    Soft Skills
-  </h3>
-  <div class="chips">
-    <span class="chip">Leadership</span>
-    <span class="chip">Ownership</span>
-    <span class="chip">Mentoring</span>
-    <span class="chip">Teamwork</span>
-    <span class="chip">Communication</span>
-    <span class="chip">Problem solving</span>
-    <span class="chip">Adaptability</span>
-    <span class="chip">Creativity</span>
-    <span class="chip">Time management</span>
-    <span class="chip">Attention to details</span>
-    <span class="chip">Quick thinking</span>
-    <span class="chip">Daily life experience</span>
-  </div>
+  <!-- Back-End & Software Development -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v2H4V4zM4 10h16v2H4v-2zM4 16h16v2H4v-2z"/></svg>  
+    Back-End & Software Development  
+  </h3>  
+  <div class="skill-grid" aria-label="Back-End skills">  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M12 2l10 6v8l-10 6L2 16V8z"/></svg> PHP</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M3 5h18v14H3V5z"/></svg> Laravel (Basics)</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M12 2l9 4v6c0 5-4 9-9 10C7 21 3 17 3 12V6z"/></svg> Node.js</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M6 2h12v2H6zM4 6h16v2H4zM6 10h12v2H6zM4 14h16v2H4z"/></svg> Java</div>  
+    <div class="skill"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4V6z"/></svg> MySQL</div>  
+  </div>  
+
+  <!-- Android Studio & Version Control -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2l4 8H8l4-8zm0 20a6 6 0 100-12 6 6 0 000 12z"/></svg>  
+    Android & Version Control  
+  </h3>  
+  <div class="chips">  
+    <span class="chip">Android Studio</span>  
+    <span class="chip">Git</span>  
+    <span class="chip">GitHub</span>  
+  </div>  
+
+  <!-- Design & Creative Tools -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v16H4V4z"/></svg>  
+    Design & Creative Tools  
+  </h3>  
+  <div class="chips">  
+    <span class="chip">Photoshop</span>  
+    <span class="chip">After Effects</span>  
+    <span class="chip">Lightroom</span>  
+    <span class="chip">Picsart</span>  
+    <span class="chip">CapCut</span>  
+    <span class="chip">Adobe Encoder</span>  
+    <span class="chip">Sony Vegas</span>  
+  </div>  
+
+  <!-- AI & Emerging Tools -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20z"/></svg>  
+    AI & Emerging Tools  
+  </h3>  
+  <div class="chips">  
+    <span class="chip">ChatGPT</span>  
+    <span class="chip">Leonardo</span>  
+    <span class="chip">MidJourney</span>  
+    <span class="chip">Blackbox</span>  
+  </div>  
+
+  <!-- Soft Skills -->  
+  <h3 class="section-title" style="margin-top:16px">  
+    <svg class="icon" viewBox="0 0 24 24"><path d="M4 4h16v2H4V4zM4 8h12v2H4V8zm0 4h16v2H4v-2zM4 16h12v2H4v-2z"/></svg>  
+    Soft Skills  
+  </h3>  
+  <div class="chips">  
+    <span class="chip">Leadership</span>  
+    <span class="chip">Teamwork</span>  
+    <span class="chip">Communication</span>  
+    <span class="chip">Problem Solving</span>  
+    <span class="chip">Adaptability</span>  
+    <span class="chip">Creativity</span>  
+    <span class="chip">Time Management</span>  
+    <span class="chip">Attention to Detail</span>  
+    <span class="chip">Good Listener</span>  
+    <span class="chip">Quick Thinker</span>  
+  </div>  
 </section>
 
 <!-- Education -->
@@ -570,14 +833,12 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
     </h2>
     <div class="contact-row">
       <div>
-        <strong>📱 Phone (WhatsApp)</strong>
-        <div>
-          <a href="https://wa.me/qr/ELN7ZKTYGX57F1" target="_blank" rel="noopener">+94 72 760 5592</a></div>
+        <strong>📱Mobile (WhatsApp)</strong>
+        <div><a href="https://wa.me/qr/ELN7ZKTYGX57F1" target="_blank" rel="noopener">SEND ME @80085</a></div>
       </div>
       <div>
-        <strong>📩 Email</strong>
-        <div>
-          <a href="mailto:yasas13.dev@gmail.com">yasas13.dev@gmail.com</a></div>
+        <strong>📩 Send your opportunities</strong>
+        <div><a href="mailto:yasas13.dev@gmail.com">80085@gmail.com</a></div>
       </div>
       <div>
         <strong>🏡 Location</strong>
@@ -608,14 +869,58 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
   </div>
 </section>
 
+<!-- Scroll to Top Button -->
+<button id="scrollTopBtn" aria-label="Scroll to top">
+  ↑
+</button>
+
 <footer>
-  <small>© <span id="year">
-   </span> Yasas Vishmitha • All rights reserved.<span title="Indigo, Electric Blue, Crimson, White"></span></small>
+  <small>© <span id="year"></span> Yasas Vishmitha • All rights reserved.<span title="Indigo, Electric Blue, Crimson, White"></span></small>
 </footer>
 
-  </main>
-  
+  </main>  
   <script>
+    
+    // Smooth scroll handling with requestAnimationFrame
+let ticking = false;
+const header = document.querySelector("header");
+
+window.addEventListener("scroll", () => {
+  if (!ticking) {
+    window.requestAnimationFrame(() => {
+      handleScroll();
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+
+function handleScroll() {
+  const y = window.scrollY;
+
+  if (y > 50) {
+    header.classList.add("scrolled");
+  } else {
+    header.classList.remove("scrolled");
+  }
+}
+  
+  
+  const menuToggle = document.getElementById('menuToggle');
+  const navLinks = document.getElementById('navLinks');
+  const menuIcon = document.getElementById('menuIcon');
+  const closeIcon = document.getElementById('closeIcon');
+
+  menuToggle.addEventListener('click', () => {
+    navLinks.classList.toggle('show');
+    if (navLinks.classList.contains('show')) {
+      menuIcon.style.display = 'none';
+      closeIcon.style.display = 'block';
+    } else {
+      menuIcon.style.display = 'block';
+      closeIcon.style.display = 'none';
+    }
+  });
     
     // -----------------------------
     // Theme toggle (Dark/Light) with localStorage
@@ -653,7 +958,27 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
     document.querySelectorAll('a[target="_blank"]').forEach(a=>{
       a.setAttribute('rel','noopener');
     });
+    
+    const scrollBtn = document.getElementById("scrollTopBtn");
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 200) {
+    scrollBtn.classList.add("show");
+  } else {
+    scrollBtn.classList.remove("show");
+  }
+});
+
+scrollBtn.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
   </script>
+  
+  
   </body>
             
   </html>
