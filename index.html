@@ -1,10 +1,11 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#0f1020" />
-  <title>Portfolio of Developer • Yasas Vishmitha.</title>
-  <meta name="description" content="Web & Software Designer, Developer • Video editor • graphic designer." />
+  <title>YASAS VISHMITHA – Portfolio</title>
+  <meta name="description" content="Web & Software Designer, Developer • Video editor • graphic designer. [personal portfolio]" />
   <style>
     /* -----------------------------
        Core variables & theme setup
@@ -191,7 +192,7 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
     <div class="container nav">
       <div class="brand">
         <span class="logo-dot" aria-hidden="true"></span>
-        <a href="#top" aria-label="Home">YASAS VISHMITHA</a>
+        <a href="#top" aria-label="Home">VISHADRA</a>
       </div>
       <nav class="links" aria-label="Primary">
         <a href="#about">About</a>
@@ -246,7 +247,7 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
             Telegram
           </a>
           <a class="btn" style="--accent:#e63946" 
-   a href="https://drive.google.com/uc?export=download&id=1fy5azb5VE_kqrK63KARZ2aPAs9TYyxHO"
+   a href="https://drive.google.com/uc?export=download&id=13dT1yT1xAcpywhDlQY46t5eHPuj5YqTR"
    download>
   <!-- File/Resume solid icon -->
   <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -339,9 +340,8 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
 </section>
 
     <!-- PROJECTS SECTION -->
-<section id="projects">
+<section class="card" id="projects">
   <h2 class="section-title">
-    <!-- Project folder / grid icon -->
     <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
       <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/>
     </svg>
@@ -350,18 +350,47 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
 
   <div class="timeline">
     <div class="item">
-      <div class="period"><p>For your entertainment and records. Just check them. you won't regret it 😌.</p></div>
-      <div>
+      <!-- Description like Sinhala text -->
+      <div class="duties">
+        For your entertainment and records. Just check them. You won't regret it 😌.
+      </div>
+
+      <!-- Buttons like bars below -->
+      <div class="buttons">
+        <!-- Main projects button -->
         <button class="btn button" style="--accent:#7df9ff" onclick="location.href='projects.html'">
           <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M3 3h8v8H3V3zm0 10h8v8H3v-8zm10-10h8v8h-8V3zm0 10h8v8h-8v-8z"/>
           </svg>
-          Check Projects 
+          Check Projects
+        </button>
+
+        <!-- Personal Blog button -->
+        <button class="btn button" style="--accent:#dc143c" onclick="comingSoon()">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3a9 9 0 100 18 9 9 0 000-18zM11 7h2v6h-2V7zm0 8h2v2h-2v-2z"/>
+          </svg>
+          Personal Blog
+        </button>
+
+        <!-- Web Projects button -->
+        <button class="btn button" style="--accent:#4b0082" onclick="comingSoon()">
+          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M4 4h16v2H4V4zm0 4h10v2H4V8zm0 4h16v2H4v-2zm0 4h10v2H4v-2z"/>
+          </svg>
+          Web Projects
         </button>
       </div>
     </div>
   </div>
 </section>
+
+
+<script>
+  function comingSoon() {
+    alert("Coming Soon – This page is under construction. Will be available soon.");
+  }
+</script>
 
 <!-- Skills -->
 <section id="skills" class="card">
@@ -596,5 +625,9 @@ footer { text-align:center; opacity:.7; padding: 26px 0 40px; }
     document.querySelectorAll('a[target="_blank"]').forEach(a=>{
       a.setAttribute('rel','noopener');
     });
-  </script></body>
-            </html>
+  </script>
+  </body>
+            
+  </html>
+            
+            
