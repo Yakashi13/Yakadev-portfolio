@@ -1,1 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CRUD — Glassmorphism (Dark)</title>
+  <meta name="description" content="Simple, responsive CRUD system. Data resets on refresh. Single-page HTML/CSS/JS." />
+  <style>
+    :root {
+      --ink: #0a0b10;
+      --ink-2:#0f111a;
+      --glass: rgba(16,19,32,0.65);
+      --stroke: rgba(255,255,255,0.08);
+      --text: #ebefff;
+      --muted:#9aa4bf;
+      --accent:#6c7cff; /* indigo */
+      --hot:#e03a5a;    /* crimson */
+      --ok:#4dd4a9;     /* mint */
+      --warn:#ffc857;   /* warm */
+      --shadow: 0 8px 30px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.05);
+      --radius: 18px;
+    }
 
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--text);
+      background: radial-gradient(1000px 700px at 10% 10%, rgba(92, 31, 198, 0.25), transparent 50%),
+                  radial-gradient(900px 700px at 90% 20%, rgba(0, 163, 255, 0.25), transparent 50%),
+                  radial-gradient(800px 600px at 30% 90%, rgba(224, 58, 90, 0.25), transparent 55%),
+                  linear-gradient(180deg, #0a0b10, #0e111a);
+      min-height: 100%;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .nav {
+      display: flex; gap: 12px; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 5; padding: 16px 20px; margin: -8px -8px 16px;
+      backdrop-filter: blur(10px) saturate(120%);
+      -webkit-backdrop-filter: blur(10px) saturate(120%);
+      background: linear-gradient(180deg, rgba(16,19,32,0.7), rgba(16,19,32,0.35));
+      border: 1px solid var(--stroke);
+      border-radius: calc(var(--radius) + 6px);
+      box-shadow: var(--shadow);
+    }
+    .brand { display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.5px; }
+    .brand .dot { width:10px; height:10px; border-radius:50%; background:linear-gradient(135deg,var(--accent),#00a3ff); box-shadow:0 0 12px rgba(108,124,255,.8); }
+    .nav .actions { display:flex; gap:8px; }
+
+    .btn {
+      --bg: var(--glass);
+      background: var(--bg);
+      border: 1px solid var(--stroke);
+      color: var(--text);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      letter-spacing: .2px;
+      cursor: pointer;
+      transition: transform .12s ease, background .2s ease, border-color .2s ease;
+      box-shadow: var(--shadow);
+    }
+    .btn:hover { transform: translateY(-1px); border-color: rgba(255,255,255,.14); }
+    .btn:active { transform: translateY(0); }
+    .btn.accent { --bg: linear-gradient(135deg, rgba(108,124,255,.22), rgba(0,163,255,.22)); border-color: rgba(108,124,255,.4); }
+    .btn.danger { --bg: linear-gradient(135deg, rgba(224,58,90,.2), rgba(224,58,90,.06)); border-color: rgba(224,58,90,.45); }
+    .btn.ghost { background: transparent; }
+
+    .toolbar {
+      display: grid; grid-template-columns: 1fr auto auto; gap: 12px; align-items: center; margin: 16px 0 18px;
+    }
+    @media (max-width: 720px){ .toolbar { grid-template-columns: 1fr 1fr; } }
+
+    .search {
+      display: flex; align-items: center; gap: 10px; padding: 10px 14px; border:1px solid var(--stroke);
+      border-radius: 14px; background: var(--glass); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: var(--shadow);
+    }
+    .search input { flex:1; background: transparent; border:0; color: var(--text); outline: none; font-size: 14px; }
+
+    .card {
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius);
+      backdrop-filter: blur(12px) saturate(120%);
+      -webkit-backdrop-filter: blur(12px) saturate(120%);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .table-wrap { overflow: auto; border-radius: var(--radius); }
+    table { width: 100%; border-collapse: collapse; min-width: 720px; }
+    thead th { text-align: left; font-size: 12px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; padding: 14px 16px; border-bottom: 1px solid var(--stroke); position: sticky; top:0; background: rgba(8,10,15,.6); backdrop-filter: blur(6px); }
+    tbody td { padding: 14px 16px; border-bottom: 1px dashed var(--stroke); }
+
+    .pill { padding: 6px 10px; border-radius: 999px; border:1px solid var(--stroke); font-size: 12px; background: rgba(255,255,255,.02); }
+    .pill.ok { border-color: rgba(77,212,169,.5); box-shadow: inset 0 0 0 999px rgba(77,212,169,.1); }
+    .pill.warn { border-color: rgba(255,200,87,.5); box-shadow: inset 0 0 0 999px rgba(255,200,87,.1); }
+
+    .row-actions { display:flex; gap: 8px; }
+    .icon-btn { background: transparent; border: 1px solid var(--stroke); padding: 8px; border-radius: 10px; cursor: pointer; color: var(--text); }
+    .icon { width: 16px; height:16px; display:inline-block; }
+
+    /* Modal */
+    dialog.modal {
+      border: 1px solid var(--stroke);
+      border-radius: calc(var(--radius) + 2px);
+      background: linear-gradient(180deg, rgba(16,19,32,.9), rgba(16,19,32,.75));
+      color: var(--text);
+      box-shadow: var(--shadow);
+      padding: 0; width: min(560px, 92vw);
+    }
+    .modal::backdrop{ background: rgba(0,0,0,.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+    .modal header { display:flex; align-items:center; justify-content: space-between; padding: 16px 18px; border-bottom:1px solid var(--stroke); }
+    .modal .body { padding: 18px; display: grid; gap: 14px; }
+    .field { display:grid; gap: 6px; }
+    .field label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+    .field input, .field select {
+      padding: 10px 12px; border-radius: 12px; border:1px solid var(--stroke); background: rgba(255,255,255,.04); color: var(--text);
+      outline: 0; font-size: 14px; transition: border-color .15s ease;
+    }
+    .field input:focus, .field select:focus { border-color: rgba(108,124,255,.6); box-shadow: 0 0 0 4px rgba(108,124,255,.12); }
+
+    .modal footer { display:flex; justify-content: flex-end; gap: 10px; padding: 16px 18px; border-top:1px solid var(--stroke); }
+
+    /* Empty state */
+    .empty { text-align:center; padding: 28px; color: var(--muted); }
+
+    /* Toast */
+    .toast { position: fixed; left: 50%; transform: translateX(-50%); bottom: 22px; padding: 12px 16px; border:1px solid var(--stroke); border-radius: 12px; backdrop-filter: blur(10px); background: linear-gradient(180deg, rgba(16,19,32,.85), rgba(16,19,32,.7)); box-shadow: var(--shadow); display:none; }
+
+    /* Utility */
+    .muted { color: var(--muted); }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+    .hide-sm { display: inline-block; }
+    @media (max-width: 600px){ .hide-sm { display:none; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <nav class="nav">
+      <div class="brand"><span class="dot"></span> CRUD System</div>
+      <div class="actions">
+        <button class="btn ghost" id="seedBtn" title="Load sample data">Seed</button>
+        <button class="btn danger" id="clearAllBtn">Clear All</button>
+        <button class="btn accent" id="addBtn">+ New</button>
+      </div>
+    </nav>
+
+    <section class="toolbar">
+      <div class="search">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 21L16.65 16.65M19 11.5C19 15.6421 15.6421 19 11.5 19C7.35786 19 4 15.6421 4 11.5C4 7.35786 7.35786 4 11.5 4C15.6421 4 19 7.35786 19 11.5Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <input id="search" type="search" placeholder="Search by name, email, role…" />
+      </div>
+      <select id="roleFilter" class="btn" aria-label="Filter by role"><option value="">All Roles</option><option>Admin</option><option>Editor</option><option>Viewer</option></select>
+      <button id="exportBtn" class="btn" title="Export current view as JSON (in-memory)">Export JSON</button>
+    </section>
+
+    <section class="card">
+      <div class="table-wrap">
+        <table id="table" aria-describedby="subtitle">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Status</th>
+              <th class="hide-sm">Created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="tbody">
+            <tr><td colspan="6" class="empty">No records yet. Click <b>+ New</b> to create one ✨</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <p id="subtitle" class="muted" style="margin-top:10px">Data lives only in memory and <span class="mono">resets on refresh</span>.</p>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <dialog class="modal" id="modal">
+    <form id="form" method="dialog">
+      <header>
+        <strong id="modalTitle">New Record</strong>
+        <button class="icon-btn" value="cancel" aria-label="Close" formnovalidate>&times;</button>
+      </header>
+      <div class="body">
+        <input type="hidden" id="id" />
+        <div class="field"><label for="name">Name</label><input id="name" required placeholder="Jane Doe" /></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" required placeholder="jane@example.com" /></div>
+        <div class="field"><label for="role">Role</label>
+          <select id="role" required>
+            <option value="" disabled selected>Select role…</option>
+            <option>Admin</option>
+            <option>Editor</option>
+            <option>Viewer</option>
+          </select>
+        </div>
+        <div class="field"><label for="status">Status</label>
+          <select id="status" required>
+            <option>Active</option>
+            <option>Invited</option>
+            <option>Suspended</option>
+          </select>
+        </div>
+      </div>
+      <footer>
+        <button class="btn" value="cancel" formnovalidate>Cancel</button>
+        <button class="btn accent" id="saveBtn" value="default">Save</button>
+      </footer>
+    </form>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  
+  <footer>
+    Made by <a href="index.html">Yakashi</a>
+  </footer>
+
+  <script>
+    // In-memory store (resets on refresh)
+    const store = {
+      data: [],
+      nextId: 1
+    };
+
+    // Elements
+    const tbody = document.getElementById('tbody');
+    const search = document.getElementById('search');
+    const roleFilter = document.getElementById('roleFilter');
+    const addBtn = document.getElementById('addBtn');
+    const clearAllBtn = document.getElementById('clearAllBtn');
+    const seedBtn = document.getElementById('seedBtn');
+    const exportBtn = document.getElementById('exportBtn');
+
+    const modal = document.getElementById('modal');
+    const form = document.getElementById('form');
+    const idInput = document.getElementById('id');
+    const nameInput = document.getElementById('name');
+    const emailInput = document.getElementById('email');
+    const roleInput = document.getElementById('role');
+    const statusInput = document.getElementById('status');
+    const modalTitle = document.getElementById('modalTitle');
+
+    const toastEl = document.getElementById('toast');
+
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.display = 'block';
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(()=> toastEl.style.display='none', 1800);
+    }
+
+    function openModal(mode='create', row=null){
+      form.reset();
+      idInput.value = '';
+      if(mode === 'edit' && row){
+        modalTitle.textContent = 'Edit Record';
+        idInput.value = row.id;
+        nameInput.value = row.name;
+        emailInput.value = row.email;
+        roleInput.value = row.role;
+        statusInput.value = row.status;
+      } else {
+        modalTitle.textContent = 'New Record';
+      }
+      modal.showModal();
+      setTimeout(()=> nameInput.focus(), 50);
+    }
+
+    // Render
+    function render(){
+      const q = search.value.trim().toLowerCase();
+      const rf = roleFilter.value;
+
+      const filtered = store.data.filter(r => {
+        const matchesSearch = !q || [r.name, r.email, r.role].some(x => String(x).toLowerCase().includes(q));
+        const matchesRole = !rf || r.role === rf;
+        return matchesSearch && matchesRole;
+      });
+
+      if(!filtered.length){
+        tbody.innerHTML = `<tr><td colspan="6" class="empty">No matching records. Try clearing filters.</td></tr>`;
+        return;
+      }
+
+      const rows = filtered.map(r => `
+        <tr>
+          <td><strong>${escapeHtml(r.name)}</strong></td>
+          <td class="mono">${escapeHtml(r.email)}</td>
+          <td>${escapeHtml(r.role)}</td>
+          <td><span class="pill ${r.status === 'Active' ? 'ok' : r.status === 'Suspended' ? 'warn' : ''}">${escapeHtml(r.status)}</span></td>
+          <td class="hide-sm mono">${new Date(r.created).toLocaleDateString()}</td>
+          <td>
+            <div class="row-actions">
+              <button class="icon-btn" title="Edit" data-action="edit" data-id="${r.id}">✏️</button>
+              <button class="icon-btn" title="Delete" data-action="delete" data-id="${r.id}">🗑️</button>
+            </div>
+          </td>
+        </tr>`).join('');
+
+      tbody.innerHTML = rows;
+    }
+
+    // Simple sanitizer for text injection in template strings
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll('&','&amp;')
+        .replaceAll('<','&lt;')
+        .replaceAll('>','&gt;')
+        .replaceAll('"','&quot;')
+        .replaceAll("'",'&#039;');
+    }
+
+    // CRUD Ops
+    function create(data){
+      const record = { id: store.nextId++, created: Date.now(), ...data };
+      store.data.unshift(record); // newest first
+      render();
+      toast('Created');
+    }
+
+    function update(id, patch){
+      const i = store.data.findIndex(r => r.id === id);
+      if(i !== -1){
+        store.data[i] = { ...store.data[i], ...patch };
+        render();
+        toast('Updated');
+      }
+    }
+
+    function remove(id){
+      const i = store.data.findIndex(r => r.id === id);
+      if(i !== -1){
+        store.data.splice(i,1);
+        render();
+        toast('Deleted');
+      }
+    }
+
+    // Event wiring
+    addBtn.addEventListener('click', () => openModal('create'));
+
+    clearAllBtn.addEventListener('click', () => {
+      if(confirm('Clear all records?')){
+        store.data = []; store.nextId = 1; render(); toast('Cleared');
+      }
+    });
+
+    seedBtn.addEventListener('click', () => {
+      const sample = [
+        { name:'Alex Johnson', email:'alex.j@example.com', role:'Admin', status:'Active' },
+        { name:'Mina Park', email:'mina@studio.io', role:'Editor', status:'Invited' },
+        { name:'Sanjay Rao', email:'sanjay@acme.co', role:'Viewer', status:'Suspended' },
+        { name:'Noor Aziz', email:'noor@wonder.dev', role:'Editor', status:'Active' },
+      ];
+      sample.forEach(s => create(s));
+    });
+
+    exportBtn.addEventListener('click', () => {
+      const q = search.value.trim().toLowerCase();
+      const rf = roleFilter.value;
+      const filtered = store.data.filter(r => {
+        const matchesSearch = !q || [r.name, r.email, r.role].some(x => String(x).toLowerCase().includes(q));
+        const matchesRole = !rf || r.role === rf;
+        return matchesSearch && matchesRole;
+      });
+      const blob = new Blob([JSON.stringify(filtered, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'export.json'; a.click();
+      URL.revokeObjectURL(url);
+      toast('Exported current view');
+    });
+
+    tbody.addEventListener('click', (e) => {
+      const btn = e.target.closest('button[data-action]');
+      if(!btn) return;
+      const id = Number(btn.dataset.id);
+      const action = btn.dataset.action;
+      const row = store.data.find(r => r.id === id);
+      if(action === 'edit') openModal('edit', row);
+      if(action === 'delete') {
+        if(confirm('Delete this record?')) remove(id);
+      }
+    });
+
+    // Form submit (create/update)
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const payload = {
+        name: nameInput.value.trim(),
+        email: emailInput.value.trim(),
+        role: roleInput.value,
+        status: statusInput.value
+      };
+      if(!payload.name || !payload.email || !payload.role || !payload.status){
+        toast('Please fill all fields');
+        return;
+      }
+      const existingId = Number(idInput.value);
+      if(existingId){ update(existingId, payload); }
+      else { create(payload); }
+      modal.close();
+    });
+
+    // Closing the modal with Cancel or Esc keeps form values intact; we reset on open.
+
+    // Live filters
+    search.addEventListener('input', render);
+    roleFilter.addEventListener('change', render);
+
+    // Initial render
+    render();
+  </script>
+</body>
+</html>
