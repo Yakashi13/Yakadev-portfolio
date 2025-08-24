@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Smart Home Kit — Glass Dashboard</title>
+  <meta name="description" content="Apple-style glassmorphism smart home dashboard. Vanilla HTML/CSS/JS. Live APIs with graceful fallbacks." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b0d12;
+      --bg-2:#0f1219;
+      --text:#e8ecf2;
+      --muted:#b8c0cc;
+      --accent:#7df9ff; /* electric blue */
+      --accent-2:#dc143c; /* crimson */
+      --indigo:#4b0082;
+      --card: rgba(16, 19, 32, 0.35);
+      --card-strong: rgba(16, 19, 32, 0.6);
+      --blur: 14px;
+      --radius: 20px;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --ring: 0 0 0 1px rgba(255,255,255,.06) inset;
+      --overlay-darken: rgba(10,12,18, .35);
+      --panel-border: 1px solid rgba(255,255,255,.09);
+    }
+    .light{
+      --bg:#f7f8fb;
+      --bg-2:#ffffff;
+      --text:#0b0d12;
+      --muted:#4f5b6a;
+      --card: rgba(255,255,255,0.5);
+      --card-strong: rgba(255,255,255,0.7);
+      --overlay-darken: rgba(255,255,255, .25);
+      --ring: 0 0 0 1px rgba(0,0,0,.06) inset;
+    }
+
+    *{box-sizing:border-box}
+    html, body{height:100%}
+    body{
+      margin:0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: var(--text);
+      line-height:1.45;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      transition: background .3s ease, color .3s ease;
+    }
+
+    /* Wallpaper layer */
+    .wallpaper{
+      position: fixed; inset:0; z-index:-2; overflow:hidden;
+    }
+    .wallpaper img{
+      position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+      transform:scale(1.02);
+      will-change: transform, opacity;
+      transition: opacity .6s ease, filter .3s ease;
+      opacity:1;
+    }
+    .darken-overlay{
+      position: fixed; inset:0; z-index:-1; background: var(--overlay-darken);
+      pointer-events:none; transition: background .3s ease;
+    }
+
+    header.appbar{
+      position: sticky; top:0; z-index:10; backdrop-filter: blur(var(--blur));
+      background: var(--card);
+      border-bottom: var(--panel-border);
+      box-shadow: var(--ring), var(--shadow);
+    }
+    .bar{
+      max-width:1200px; margin:0 auto; padding:12px clamp(12px, 3vw, 28px);
+      display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+      background: var(--card-strong); backdrop-filter: blur(var(--blur));
+      border: var(--panel-border); box-shadow: var(--ring);
+      font-size: 13px; color: var(--muted);
+      white-space:nowrap;
+    }
+
+    main{
+      max-width:1200px; margin: 20px auto; padding: 0 clamp(12px, 3vw, 28px) 60px;
+    }
+
+    .grid{
+      display:grid; gap:18px;
+      grid-template-columns: repeat(12, 1fr);
+    }
+    @media (max-width: 1100px){ .grid{grid-template-columns: repeat(8, 1fr);} }
+    @media (max-width: 740px){ .grid{grid-template-columns: repeat(4, 1fr);} }
+
+    .card{
+      grid-column: span 4;
+      background: var(--card);
+      border: var(--panel-border);
+      backdrop-filter: blur(var(--blur));
+      border-radius: var(--radius);
+      padding: 16px; box-shadow: var(--ring), var(--shadow);
+      min-height: 120px;
+    }
+    .span-6{grid-column: span 6}
+    .span-8{grid-column: span 8}
+    .span-12{grid-column: span 12}
+    @media (max-width: 1100px){ .span-8{grid-column: span 8} .span-6{grid-column: span 8} }
+    @media (max-width: 740px){ .card, .span-6, .span-8, .span-12{grid-column: span 4} }
+
+    h2, h3{margin:0 0 10px 0}
+    h2{font-size: clamp(18px, 2.2vw, 22px)}
+    h3{font-size: clamp(14px, 2vw, 16px); color: var(--muted); font-weight:600}
+    p{margin:6px 0}
+
+    .toolbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+    .btn, .switch{
+      appearance:none; border:0; cursor:pointer; user-select:none;
+      padding:10px 14px; border-radius:14px; background: var(--card-strong);
+      color: var(--text); font-weight:600; box-shadow: var(--ring);
+      transition: transform .06s ease; will-change: transform;
+    }
+    .btn:active{ transform: translateY(1px) }
+
+    .switch{display:inline-flex; align-items:center; gap:8px}
+    .switch input{display:none}
+
+    .badge{font-size:12px; color:var(--muted)}
+    .muted{color:var(--muted)}
+
+    .list{display:grid; gap:10px}
+    .list .item{display:flex; align-items:center; gap:10px; background: var(--card-strong); padding:10px; border-radius:12px; border: var(--panel-border)}
+
+    .todo{display:flex; gap:10px; margin-top:10px}
+    .todo input{flex:1; padding:10px 12px; border-radius:12px; border: var(--panel-border); background: var(--card-strong); color: var(--text)}
+    .todo button{padding:10px 12px}
+
+    .kv{display:grid; grid-template-columns: 1fr auto; gap:8px; font-size:14px}
+    .kv .k{color:var(--muted)}
+
+    .news{display:grid; gap:10px; max-height:320px; overflow:auto; padding-right:4px}
+    .news a{color:inherit; text-decoration:none}
+    .news .n-item{background: var(--card-strong); border: var(--panel-border); padding:12px; border-radius:12px}
+
+    footer{opacity:.9; text-align:center; padding:26px; font-size:14px}
+    footer a{color:var(--accent); text-decoration:none}
+
+    .skeleton{background:linear-gradient(90deg, transparent, rgba(255,255,255,.06), transparent); background-size:200% 100%; animation: shimmer 1.2s infinite linear}
+    @keyframes shimmer{to{background-position: -200% 0}}
+
+    /* reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .wallpaper img{transition:none}
+      .btn, .switch{transition:none}
+    }
+  </style>
+</head>
+<body class="dark">
+  <!-- Wallpaper Layer -->
+  <div class="wallpaper" id="wallpaper">
+    <img id="wallpaper-img" src="https://images8.alphacoders.com/135/1354012.png" alt="Wallpaper" />
+  </div>
+  <div class="darken-overlay" id="darkenOverlay"></div>
+
+  <!-- Top Bar -->
+  <header class="appbar">
+    <div class="bar">
+      <div class="brand">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2c2.6 0 5 1.1 6.7 2.9L12 16 5.3 4.9C7 3.1 9.4 2 12 2z" fill="url(#g)"/>
+          <path d="M4 7.5 12 22l8-14.5c-1.6-1.8-3.9-3-6.5-3h-3c-2.6 0-4.9 1.2-6.5 3z" fill="currentColor" opacity=".2"/>
+          <defs><linearGradient id="g" x1="0" y1="0" x2="24" y2="24"><stop stop-color="#7df9ff"/><stop offset="1" stop-color="#dc143c"/></linearGradient></defs>
+        </svg>
+        <span>Smart Home Kit</span>
+      </div>
+      <span class="chip" id="clock">--:--:--</span>
+      <span class="chip" id="battery">Battery: --%</span>
+      <span class="chip" id="net">IP: •• ISP: ••</span>
+      <div style="margin-left:auto" class="toolbar">
+        <label class="switch">
+          <input type="checkbox" id="modeToggle">
+          <span>Light / Dark</span>
+        </label>
+        <button class="btn" id="shuffleBg">Shuffle Wallpaper</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="grid">
+      <!-- Overview -->
+      <article class="card span-8" id="overview">
+        <h2>Overview</h2>
+        <div class="kv" id="overviewKV">
+          <div class="k">Location (GPS)</div><div class="v" id="gps">Locating…</div>
+          <div class="k">Google Last Location</div><div class="v" id="googleLoc">Unavailable (requires Google OAuth) — using mock</div>
+          <div class="k">Weather</div><div class="v" id="weather">Fetching…</div>
+          <div class="k">Device</div><div class="v" id="device">—</div>
+        </div>
+      </article>
+
+      <!-- Controls -->
+      <article class="card span-4">
+        <h2>Controls</h2>
+        <div class="list">
+          <div class="item"><button class="btn" id="toggleDim">Dim Background</button><span class="badge">darkens wallpaper</span></div>
+          <div class="item"><button class="btn" id="speedTestBtn">Run Speed Test</button><span class="badge" id="speed">—</span></div>
+          <div class="item"><button class="btn" id="refreshAll">Refresh Data</button><span class="badge">force reload</span></div>
+        </div>
+      </article>
+
+      <!-- News -->
+      <article class="card span-6" id="newsPanel">
+        <h2>Top News</h2>
+        <div class="news" id="newsList">
+          <div class="n-item skeleton">Loading headlines…</div>
+        </div>
+      </article>
+
+      <!-- To-Do -->
+      <article class="card span-6">
+        <h2>To‑Do</h2>
+        <div class="list" id="todoList"></div>
+        <div class="todo">
+          <input id="todoInput" placeholder="Add a task (clears on refresh)"/>
+          <button class="btn" id="addTodo">Add</button>
+        </div>
+        <p class="badge">Ephemeral only — nothing is saved.</p>
+      </article>
+
+      <!-- System & Network -->
+      <article class="card span-12">
+        <h2>System & Network</h2>
+        <div class="kv">
+          <div class="k">IP Address</div><div class="v" id="ip">—</div>
+          <div class="k">ISP / Org</div><div class="v" id="isp">—</div>
+          <div class="k">City / Region / Country</div><div class="v" id="city">—</div>
+          <div class="k">Coordinates</div><div class="v" id="coords">—</div>
+          <div class="k">Timezone</div><div class="v" id="tz">—</div>
+          <div class="k">User Agent</div><div class="v" id="ua">—</div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Made by <a href="index.html">Yakashi</a>
+  </footer>
+
+  <script>
+    // ========= WALLPAPERS =========
+    const WALLPAPERS = [
+      "https://images8.alphacoders.com/135/1354012.png",
+      "https://images3.alphacoders.com/681/681016.jpg",
+      "https://images.alphacoders.com/134/1343747.png",
+      "https://images3.alphacoders.com/132/1328396.png",
+      // Extras (can add more):
+      "https://images.unsplash.com/photo-1502082553048-f009c37129b9?q=80&w=2400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?q=80&w=2400&auto=format&fit=crop"
+    ];
+
+    const qs = sel => document.querySelector(sel);
+    const qsa = sel => Array.from(document.querySelectorAll(sel));
+
+    const state = {
+      coords: null,
+      ipinfo: null,
+      weather: null,
+      news: [],
+      todos: []
+    };
+
+    // ========= THEME =========
+    const modeToggle = qs('#modeToggle');
+    const bodyEl = document.body;
+    const overlay = qs('#darkenOverlay');
+
+    const applyTheme = () => {
+      const isLight = bodyEl.classList.contains('light');
+      overlay.style.background = isLight ? 'rgba(255,255,255,.25)' : 'rgba(10,12,18,.35)';
+    }
+
+    modeToggle.addEventListener('change', () => {
+      bodyEl.classList.toggle('light', modeToggle.checked);
+      bodyEl.classList.toggle('dark', !modeToggle.checked);
+      applyTheme();
+    });
+
+    // ========= CLOCK =========
+    function startClock(){
+      const clock = qs('#clock');
+      const fmt = n => String(n).padStart(2,'0');
+      function tick(){
+        const d = new Date();
+        clock.textContent = `${fmt(d.getHours())}:${fmt(d.getMinutes())}:${fmt(d.getSeconds())}`;
+        requestAnimationFrame(()=>{}); // keeps things smooth
+      }
+      setInterval(tick, 1000);
+      tick();
+    }
+
+    // ========= BATTERY =========
+    async function setupBattery(){
+      const el = qs('#battery');
+      try{
+        if(navigator.getBattery){
+          const batt = await navigator.getBattery();
+          const update = () => {
+            const pct = Math.round(batt.level*100);
+            const plug = batt.charging ? '⚡' : '';
+            el.textContent = `Battery: ${pct}% ${plug}`;
+          };
+          batt.addEventListener('levelchange', update);
+          batt.addEventListener('chargingchange', update);
+          update();
+        }else{
+          el.textContent = 'Battery: n/a';
+        }
+      }catch(e){
+        el.textContent = 'Battery: n/a';
+      }
+    }
+
+    // ========= DEVICE INFO =========
+    function setupDevice(){
+      qs('#ua').textContent = navigator.userAgent;
+      qs('#device').textContent = `${navigator.platform || '—'} · ${navigator.language}`;
+      qs('#tz').textContent = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    }
+
+    // ========= IP / ISP =========
+    async function fetchIPInfo(){
+      try{
+        const r = await fetch('https://ipapi.co/json/'); // CORS-enabled
+        if(!r.ok) throw new Error('ip api failed');
+        const j = await r.json();
+        state.ipinfo = j;
+        qs('#ip').textContent = j.ip || '—';
+        qs('#isp').textContent = j.org ? `${j.org}${j.asn?` (${j.asn})`:''}` : '—';
+        qs('#city').textContent = `${j.city||'—'}, ${j.region||'—'}, ${j.country_name||j.country||'—'}`;
+        qs('#coords').textContent = j.latitude && j.longitude ? `${j.latitude.toFixed(4)}, ${j.longitude.toFixed(4)}` : '—';
+        qs('#net').textContent = `IP: ${j.ip||'—'} · ISP: ${j.org||'—'}`;
+        if(!state.coords){
+          // fallback coords from ip when geolocation not granted
+          if(j.latitude && j.longitude){ state.coords = {lat:j.latitude, lon:j.longitude}; fetchWeather(); }
+        }
+      }catch(e){
+        // mock
+        const mock = {ip:`192.0.2.${Math.floor(Math.random()*200)+1}`, org:'Mock ISP', city:'Metropolis', region:'Central', country_name:'Freedonia'};
+        state.ipinfo = mock;
+        qs('#ip').textContent = mock.ip;
+        qs('#isp').textContent = mock.org;
+        qs('#city').textContent = `${mock.city}, ${mock.region}, ${mock.country_name}`;
+        qs('#coords').textContent = '—';
+        qs('#net').textContent = `IP: ${mock.ip} · ISP: ${mock.org}`;
+      }
+    }
+
+    // ========= GPS =========
+    function getGPS(){
+      if(!('geolocation' in navigator)){
+        qs('#gps').textContent = 'Geolocation not supported';
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(pos=>{
+        const {latitude, longitude} = pos.coords;
+        state.coords = {lat: latitude, lon: longitude};
+        qs('#gps').textContent = `${latitude.toFixed(5)}, ${longitude.toFixed(5)}`;
+        fetchWeather();
+      }, err=>{
+        qs('#gps').textContent = `Denied — using IP-based location`;
+        // weather may be fetched from IP fallback in fetchIPInfo
+      }, {enableHighAccuracy:true, timeout:8000, maximumAge:120000});
+    }
+
+    // ========= GOOGLE LAST LOCATION (not accessible) =========
+    function setGoogleLocationMock(){
+      // NOTE: For privacy & platform reasons, a website cannot read a user's Google account location
+      // without explicit OAuth and Google APIs. We therefore show a clearly labeled mock.
+      const presets = ['Colombo, LK','Singapore, SG','Tokyo, JP','San Francisco, US','Berlin, DE'];
+      const pick = presets[Math.floor(Math.random()*presets.length)];
+      qs('#googleLoc').textContent = `${pick} (mock)`;
+    }
+
+    // ========= WEATHER =========
+    async function fetchWeather(){
+      const el = qs('#weather');
+      if(!state.coords){ el.textContent = '—'; return; }
+      const {lat, lon} = state.coords;
+      try{
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`;
+        const r = await fetch(url);
+        if(!r.ok) throw new Error('weather fail');
+        const j = await r.json();
+        const cw = j.current_weather;
+        if(cw){
+          const map = {
+            0:'Clear',1:'Mainly Clear',2:'Partly Cloudy',3:'Overcast',45:'Fog',48:'Rime Fog',51:'Drizzle',53:'Drizzle',55:'Drizzle',61:'Rain',63:'Rain',65:'Heavy Rain',71:'Snow',80:'Showers',95:'Thunder'
+          };
+          el.textContent = `${cw.temperature}°C · ${map[cw.weathercode]||'—'} · ${cw.windspeed} km/h`;
+        }else{
+          throw new Error('no cw');
+        }
+      }catch(e){
+        // mock
+        const temps = [26, 27, 28, 29, 30, 31];
+        el.textContent = `${temps[Math.floor(Math.random()*temps.length)]}°C · Partly Cloudy · 9 km/h`;
+      }
+    }
+
+    // ========= NEWS (Google News RSS via AllOrigins CORS proxy) =========
+    async function fetchNews(){
+      const el = qs('#newsList');
+      el.innerHTML = '<div class="n-item skeleton">Loading headlines…</div>';
+      const rss = encodeURIComponent('https://news.google.com/rss?hl=en-SG&gl=SG&ceid=SG:en');
+      const url = `https://api.allorigins.win/raw?url=${rss}`;
+      try{
+        const r = await fetch(url);
+        if(!r.ok) throw new Error('rss fail');
+        const xml = await r.text();
+        const doc = new DOMParser().parseFromString(xml, 'text/xml');
+        const items = Array.from(doc.querySelectorAll('item')).slice(0,10).map(it=>({
+          title: it.querySelector('title')?.textContent||'Untitled',
+          link: it.querySelector('link')?.textContent||'#',
+          date: it.querySelector('pubDate')?.textContent||''
+        }));
+        state.news = items;
+        el.innerHTML = items.map(n=>`<a class="n-item" href="${n.link}" target="_blank" rel="noopener">${n.title}<div class='badge'>${n.date}</div></a>`).join('');
+      }catch(e){
+        // mock rotating headlines
+        const pool = ['Smart home trends skyrocket','New chipset boosts battery life','City adopts green energy','Designers love glassmorphism','JavaScript gets a new feature','Privacy updates roll out'];
+        const items = Array.from({length:8}, (_,i)=>({title: pool[(Math.random()*pool.length)|0] + ' #' + (i+1), link:'#', date: new Date().toUTCString()}));
+        state.news = items;
+        el.innerHTML = items.map(n=>`<div class="n-item">${n.title}<div class='badge'>${n.date}</div></div>`).join('');
+      }
+    }
+
+    // ========= TODOS =========
+    function renderTodos(){
+      const list = qs('#todoList');
+      list.innerHTML = '';
+      state.todos.forEach((t, idx)=>{
+        const item = document.createElement('div');
+        item.className = 'item';
+        item.innerHTML = `<span>${t}</span>`;
+        const del = document.createElement('button');
+        del.className = 'btn'; del.textContent = 'Done';
+        del.addEventListener('click', ()=>{ state.todos.splice(idx,1); renderTodos(); });
+        item.appendChild(del);
+        list.appendChild(item);
+      })
+    }
+    function setupTodos(){
+      qs('#addTodo').addEventListener('click', ()=>{
+        const inp = qs('#todoInput');
+        const v = (inp.value||'').trim(); if(!v) return;
+        state.todos.unshift(v); inp.value=''; renderTodos();
+      });
+      qs('#todoInput').addEventListener('keydown', (e)=>{ if(e.key==='Enter') qs('#addTodo').click(); });
+    }
+
+    // ========= SPEED TEST =========
+    async function runSpeedTest(){
+      const badge = qs('#speed');
+      badge.textContent = 'Testing…';
+      try{
+        const start = performance.now();
+        const r = await fetch('https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg?cachebust=' + Math.random());
+        const blob = await r.blob();
+        const ms = performance.now() - start;
+        const mb = blob.size / (1024*1024);
+        const mbps = (mb / (ms/1000)) * 8; // megabits per second
+        badge.textContent = `${mbps.toFixed(1)} Mbps (est)`;
+      }catch(e){
+        badge.textContent = 'n/a';
+      }
+    }
+
+    // ========= WALLPAPER SHUFFLE =========
+    function shuffleWallpaper(){
+      const img = qs('#wallpaper-img');
+      const next = WALLPAPERS[Math.floor(Math.random()*WALLPAPERS.length)];
+      if(img.dataset.src === next) return shuffleWallpaper();
+      const temp = new Image();
+      temp.onload = () => { img.style.opacity = 0; setTimeout(()=>{ img.src = next; img.dataset.src = next; img.style.opacity = 1; }, 150); };
+      temp.src = next;
+    }
+
+    // ========= CONTROLS =========
+    function setupControls(){
+      qs('#shuffleBg').addEventListener('click', shuffleWallpaper);
+      qs('#toggleDim').addEventListener('click', ()=>{
+        const current = overlay.style.background;
+        overlay.style.background = current.includes('0.35') ? 'rgba(10,12,18,.55)' : 'rgba(10,12,18,.35)';
+      });
+      qs('#speedTestBtn').addEventListener('click', runSpeedTest);
+      qs('#refreshAll').addEventListener('click', ()=>{ fetchIPInfo(); getGPS(); fetchNews(); fetchWeather(); setGoogleLocationMock(); });
+    }
+
+    // ========= INIT =========
+    (function init(){
+      applyTheme();
+      startClock();
+      setupBattery();
+      setupDevice();
+      setupControls();
+      setupTodos();
+      setGoogleLocationMock();
+      fetchIPInfo();
+      getGPS();
+      fetchNews();
+      // First weather call may come from GPS or IP fallback
+    })();
+  </script>
+</body>
+</html>
