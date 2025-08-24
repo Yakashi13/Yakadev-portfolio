@@ -81,7 +81,14 @@
     }
 
     /* hero */
-    .hero{max-width:1200px;margin:28px auto 0;padding: 2.2rem 1rem 1rem;display:grid;grid-template-columns:1.1fr .9fr;gap:1.4rem}
+    .hero {
+  max-width: 1200px;
+  margin: 28px auto 0;
+  padding: 2.2rem 1rem 1rem;
+  display: grid;
+  grid-template-columns: 1fr; /* default: stacked for mobile */
+  gap: 1.4rem;
+}
     .hero-card{
       padding:1.2rem; border-radius:var(--radius);
       background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
@@ -242,7 +249,7 @@
     radial-gradient(900px 600px at 110% 10%, rgba(0,163,255,.16), transparent 60%),
     radial-gradient(700px 500px at 50% 120%, rgba(91,91,214,.20), transparent 60%),
     linear-gradient(180deg, var(--ink), var(--ink-2)),
-    url('https://www.mediastorehouse.co.uk/p/694/fall-rebel-angels-gustave-dore-12953343.jpg.webp') center/cover no-repeat;
+    url('#') center/cover no-repeat;
   background-attachment: fixed;
   animation: floatBG 20s ease infinite;
 }
@@ -315,6 +322,22 @@
   .glass-btn { padding: 0.7rem 1.2rem; font-size: 0.95rem; }
 }
 
+/* Larger desktop layouts */
+@media (min-width: 1024px) {
+  .hero {
+    grid-template-columns: 1.1fr 0.9fr; /* bring back 2 columns */
+    align-items: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.5rem, 3vw + 1rem, 4rem); /* scale better */
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    max-width: 60ch;
+  }
+}
 
   </style>
   
@@ -1102,4 +1125,4 @@
     - Images are embedded directly from Britannica’s CDN to match article art.
   -->
 </body>
-  </html>
+          </html>
