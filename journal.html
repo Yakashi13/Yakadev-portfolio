@@ -1,0 +1,1105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Angels & Demons — Yakashi’s Journal recap</title>
+  <meta name="description" content="A personal Journey page exploring angels, demons, fallen angels, and intermediary spirits across world traditions." />
+  <link rel="preconnect" href="https://cdn.britannica.com" crossorigin>
+  <style>
+    :root{
+      /* palette — indigo, crimson, electric blue, white */
+      --indigo:#5b5bd6;
+      --crimson:#e03a5a;
+      --eblue:#00a3ff;
+      --ink:#0a0b10;
+      --ink-2:#0f111a;
+      --glass:#101320cc;
+      --glass-light:#f6f7fbcc;
+      --text:#e8ecff;
+      --muted:#a9b0c7;
+      --ring: 0 0 0 2px rgba(0,163,255,.35);
+      --radius: 18px;
+    }
+    /* light theme tokens flip */
+    .theme-light{
+      --ink:#f8f9ff;
+      --ink-2:#f1f3fb;
+      --glass:#ffffffcc;
+      --text:#0f1322;
+      --muted:#48506a;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background: radial-gradient(1200px 1000px at 10% -10%, rgba(224,58,90,.18), transparent 60%),
+                  radial-gradient(900px 600px at 110% 10%, rgba(0,163,255,.16), transparent 60%),
+                  radial-gradient(700px 500px at 50% 120%, rgba(91,91,214,.20), transparent 60%),
+                  linear-gradient(180deg, var(--ink), var(--ink-2));
+      background-attachment: fixed;
+    }
+
+    /* header */
+    .nav{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter: blur(14px) saturate(1.2);
+      background: linear-gradient(180deg, rgba(15,17,26,.72), rgba(15,17,26,.38));
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .nav-inner{
+      max-width:1200px;margin:auto;
+      padding: .75rem 1rem; display:flex; align-items:center; gap:.75rem; justify-content:space-between;
+    }
+    .brand{display:flex;align-items:center;gap:.6rem;font-weight:800;letter-spacing:.3px}
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background:
+        https://imgcdn.stablediffusionweb.com/2025/2/25/0700af95-6dbc-4610-98de-d2e2ade198ff.jpg;
+    }
+    .mode{
+      display:flex;align-items:center;gap:.5rem;
+    }
+    .btn{
+      appearance:none;border:0;cursor:pointer;
+      padding:.6rem .9rem;border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      color:var(--text);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+      transition:.25s transform, .25s box-shadow;
+    }
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(0,163,255,.18)}
+    .btn:active{transform:translateY(0)}
+    .chip{
+      font-size:.8rem; padding:.35rem .6rem;border-radius:999px; border:1px solid rgba(255,255,255,.14);
+      background:linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.05));
+    }
+
+    /* hero */
+    .hero{max-width:1200px;margin:28px auto 0;padding: 2.2rem 1rem 1rem;display:grid;grid-template-columns:1.1fr .9fr;gap:1.4rem}
+    .hero-card{
+      padding:1.2rem; border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 60px rgba(10,20,40,.35), inset 0 0 0 1px rgba(255,255,255,.02);
+      overflow:hidden; position:relative;
+    }
+    .hero h1{margin:.3rem 0 0;font-size:clamp(1.8rem, 3.2vw, 3rem);line-height:1.05}
+    .hero p{color:var(--muted); margin:.7rem 0 1rem; max-width:65ch}
+    .hero .badges{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0 1.2rem}
+    .hero-figure{
+      border-radius:var(--radius); overflow:hidden; min-height:280px;
+      background: radial-gradient(400px 280px at 90% 10%, rgba(224,58,90,.18), transparent 60%),
+                  radial-gradient(400px 250px at 0% 90%, rgba(0,163,255,.18), transparent 60%);
+      display:grid;grid-template-columns:1fr 1fr; gap:8px; align-content:stretch;
+    }
+    .hero-figure img{width:100%;height:100%;object-fit:cover;border-radius:12px;border:1px solid rgba(255,255,255,.08)}
+    .hero-cta{display:flex;gap:.6rem;flex-wrap:wrap}
+
+    /* grid */
+    .wrap{max-width:1200px;margin:0 auto;padding: .5rem 1rem 4rem}
+    .section-title{margin:2.2rem 0 1rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+    .section-title h2{font-size:clamp(1.2rem, 2.5vw, 1.6rem);margin:0}
+    .grid{
+      display:grid;gap:16px;grid-template-columns: repeat(12, 1fr);
+    }
+    .card{
+      grid-column: span 4; min-height: 240px; position:relative; overflow:hidden;
+      border-radius: 20px; padding: 1rem; display:flex; flex-direction:column; justify-content:flex-end;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); backdrop-filter: blur(12px);
+      box-shadow:0 12px 40px rgba(0,0,0,.35);
+    }
+    .card .tag{position:absolute; top:10px; left:10px}
+    .card h3{margin:0 0 .35rem; font-size:1.1rem}
+    .card p{margin:0;color:var(--muted)}
+    .card .thumb{
+      position:absolute; inset:0; z-index:0; opacity:.4; filter:contrast(1.05) saturate(1.1) brightness(.9);
+      background-position:center; background-size:cover; transition: .35s transform , .35s opacity;
+    }
+    .card:hover .thumb{transform:scale(1.05); opacity:.5}
+    .card .glass{position:relative; z-index:2; background:linear-gradient(180deg, rgba(10,11,16,.0), rgba(10,11,16,.55)); padding-top:5rem; border-radius:16px}
+
+    /* modal */
+    dialog{
+      width:min(1000px, 94vw);
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:22px; padding:0; color:var(--text);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      backdrop-filter: blur(16px);
+      box-shadow: 0 40px 120px rgba(0,0,0,.55);
+    }
+    dialog::backdrop{background:rgba(5,6,10,.6)}
+    .modal-head{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1rem .75rem;border-bottom:1px solid rgba(255,255,255,.06)}
+    .modal-body{padding:1rem 1rem 1.2rem; max-height: min(72vh, 800px); overflow:auto}
+    .modal-body h4{margin:1rem 0 .4rem}
+    .modal-body p{color:var(--muted); line-height:1.6}
+    .modal-hero{width:100%; aspect-ratio:16/9; border-radius:18px; overflow:hidden; border:1px solid rgba(255,255,255,.08); margin: .2rem 0 1rem}
+    .modal-hero img{width:100%;height:100%;object-fit:cover}
+
+    /* footer + credit */
+    footer{
+      margin-top:3rem; padding:1.2rem; text-align:center; color:var(--muted);
+    }
+    .credit{
+      display:flex; flex-direction:column; gap:.4rem; align-items:center; justify-content:center;
+      padding:1rem;margin-top:.6rem;border-radius:16px;
+      background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08); backdrop-filter: blur(10px);
+    }
+    a{color:var(--eblue); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    /* scroll to top */
+    #toTop{
+      position:fixed; right:16px; bottom:16px; z-index:60;
+      width:44px; height:44px; display:grid; place-items:center;
+      border-radius:12px; border:1px solid rgba(255,255,255,.12);
+      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      backdrop-filter: blur(10px); cursor:pointer; opacity:0; pointer-events:none; transform: translateY(8px);
+      transition: .25s opacity, .25s transform;
+    }
+    #toTop.show{opacity:1; pointer-events:auto; transform: translateY(0)}
+    #toTop svg{width:20px;height:20px}
+
+    /* responsive */
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr}
+      .card{grid-column: span 6}
+    }
+    @media (max-width: 640px){
+      .card{grid-column: span 12}
+      .hero-figure{grid-template-columns:1fr}
+    }
+    
+    .highlight-card {
+  grid-column: 1 / -1; /* spans full width of grid */
+  border-radius: 20px;
+  margin: 1rem 0;
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.highlight-inner {
+  max-width: 800px;
+}
+
+.highlight-card h3 {
+  margin: 0 0 .5rem;
+  font-size: 1.4rem;
+  color: var(--eblue);
+}
+
+.highlight-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.video-wrapper {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* keeps 16:9 aspect ratio */
+  height: 0;
+  border-radius: 1rem;
+  overflow: hidden;
+  margin-top: 1rem;
+  box-shadow: 0 0 15px rgba(0,0,0,0.4);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.landing {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  background:
+    radial-gradient(1200px 1000px at 10% -10%, rgba(224,58,90,.18), transparent 60%),
+    radial-gradient(900px 600px at 110% 10%, rgba(0,163,255,.16), transparent 60%),
+    radial-gradient(700px 500px at 50% 120%, rgba(91,91,214,.20), transparent 60%),
+    linear-gradient(180deg, var(--ink), var(--ink-2)),
+    url('https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/1/mankinds-eternal-dilemma-the-choice-between-virtue-and-vice-frans-francken-the-younger.jpg') center/cover no-repeat;
+  background-attachment: fixed;
+  animation: floatBG 20s ease infinite;
+}
+
+.landing-content {
+  max-width: 900px;
+  opacity: 0;
+  animation: floatUp 2s ease forwards;
+}
+
+.landing h1 {
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--text);
+  line-height: 1.1;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: fadeIn 2s ease forwards;
+}
+
+.landing h1 svg {
+  vertical-align: middle;
+  margin-left: 10px;
+  width: 36px;
+  height: 36px;
+}
+
+/* Glass Button */
+.glass-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+  border-radius: var(--radius);
+  color: var(--text);
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(12px);
+  transition: all 0.3s ease;
+}
+
+.glass-btn:hover {
+  background: rgba(255,255,255,.15);
+  transform: translateY(-2px);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes floatBG {
+  0%,100% { background-position: 0% 0%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Responsive tweaks */
+@media (max-width: 980px) {
+  .landing h1 { font-size: clamp(2.5rem, 12vw, 5rem); }
+  .glass-btn { padding: 0.8rem 1.5rem; font-size: 1rem; }
+}
+
+@media (max-width: 640px) {
+  .landing h1 { font-size: clamp(2rem, 14vw, 4rem); }
+  .glass-btn { padding: 0.7rem 1.2rem; font-size: 0.95rem; }
+}
+
+
+  </style>
+  
+  
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          Angels & Demons <span class="chip">personal study</span>
+        </div>
+      </div>
+      <div class="mode">
+        <button id="themeBtn" class="btn" aria-label="Toggle light/dark">🌗 Theme</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+     
+     <!-- Landing Section -->
+<section class="landing">
+  <div class="landing-content">
+    <h1>
+      Welcome To My <br> Journal of <br> Angels & Demons 
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="var(--eblue)">
+        <path d="M22 12l-2.1 2.5.3 3.2-3.1.9-1.6 2.7-3.2-1-3.2 1-1.6-2.7-3.1-.9.3-3.2L2 12l2.1-2.5-.3-3.2 3.1-.9L8.5 2.7l3.2 1 3.2-1 1.6 2.7 3.1.9-.3 3.2z"/>
+        <path d="M10.2 13.7l-2.2-2.2 1.4-1.4 0.8 0.8 3.6-3.6 1.4 1.4z" fill="#fff"/>
+      </svg>
+    </h1>
+    <a href="#top" class="btn glass-btn">Go To Journal</a>
+  </div>
+</section>
+     
+     
+     
+    <!-- HERO -->
+    <section class="hero" id="top">
+        
+        <div class="title">   
+      <article class="hero-card">
+        <h1>Angels & Demons across the world</h1>
+        <p>
+          My journal through cultures map the beings between the sacred and the everyday. Blending theology,
+          folklore, and art history.
+        </p>
+        <div class="badges">
+          <span class="chip">Etymology</span>
+          <span class="chip">Cosmic models</span>
+          <span class="chip">Fallen angels</span>
+          <span class="chip">Zoroastrian → Abrahamic</span>
+          <span class="chip">Hindu/Buddhist/Daoist/Japanese</span>
+        </div>
+        <div class="hero-cta">
+          <a class="btn" href="#library">Explore the library ↓</a>
+          <button class="btn" id="aboutBtn">What’s this site?</button>
+        </div>
+      </article>
+      <figure class="hero-figure hero-card" aria-label="Article art">
+        <img src="https://cdn.britannica.com/94/5594-050-1C1166D6/Annunciation-Fra-Angelico-Florence-Museum-of-San.jpg" alt="Fra Angelico’s Annunciation (Britannica)" loading="lazy">
+        <img src="https://cdn.britannica.com/25/26025-050-A8202932/Ravana-painting-Guler-Ramayana-Cleveland-Museum-of-1720.jpg" alt="Ravana, demon king (Britannica)" loading="lazy">
+        <img src="https://cdn.britannica.com/17/42517-050-859E2ECA/bodhisattvas-Guanyin-detail-mural-province-Tang-dynasty.jpg" alt="Guanyin and bodhisattvas mural (Britannica)" loading="lazy">
+        <img src="https://cdn.britannica.com/94/5594-050-1C1166D6/Annunciation-Fra-Angelico-Florence-Museum-of-San.jpg" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://thebiblechat.com/_next/image/?url=https%3A%2F%2Fi.imgur.com%2FCrtvnIz.png&w=1200&q=75" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://thebiblechat.com/_next/image/?url=https%3A%2F%2Fi.imgur.com%2F8JnF7pz.png&w=1200&q=75" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://thebiblechat.com/_next/image/?url=https%3A%2F%2Fi.imgur.com%2FA5XQdV7.png&w=1200&q=75" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://i.swncdn.com/media/400w/via/5511-lukas-meier-aaxn9pye8l0-unsplash-2.webp" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://image.myanimelist.net/ui/5LYzTBVoS196gvYvw3zjwOdzMnKK52Z0xvpZcPPZq5w" alt="" aria-hidden="true" loading="lazy">
+        <img src="https://cdn.shopify.com/s/files/1/0921/7494/2517/files/saint-raphael-healing-power-god.jpg?v=1749161960" alt="" aria-hidden="true" loading="lazy">
+      </figure>
+    </section>
+
+    <!-- GRID LIBRARY -->
+    <section class="wrap" id="library">
+      <div class="section-title">
+        <h2>Library — tap a card to open a deep-dive</h2>
+        <span class="chip">Modal articles with full details</span>
+      </div>
+
+      <div class="grid">
+        <!-- Card 1 -->
+        <article class="card" data-modal="m1">
+          <div class="thumb" style="background-image:url('https://as1.ftcdn.net/jpg/06/10/30/82/1000_F_610308232_eLceQK1IlxqP3SH7RFlHQ1ctBaMpadBs.webp')"></div>
+          <div class="glass">
+            <span class="chip tag">Foundations</span>
+            <h3>What are “angels” & “demons”?</h3>
+            <p>Intermediary beings 101: what the words originally meant and how roles evolved.</p>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="card" data-modal="m2">
+          <div class="thumb" style="background-image:linear-gradient(rgba(0,0,0,.0),rgba(0,0,0,.2)),url('https://static.wikia.nocookie.net/unnaturalworld/images/9/9d/Biblic_Angels.jpeg/revision/latest?cb=20231226052513')"></div>
+          <div class="glass">
+            <span class="chip tag">Theories</span>
+            <h3>Cosmic models & spirit types</h3>
+            <p>Tripartite vs dualistic vs monistic cosmos, and where spirits “live”.</p>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="card" data-modal="m3">
+          <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Nachtmahr_%28Abildgaard%29.jpg/960px-Nachtmahr_%28Abildgaard%29.jpg')"></div>
+          <div class="glass">
+            <span class="chip tag">Typology</span>
+            <h3>Benevolent • Malevolent • Ambivalent</h3>
+            <p>From guardian angels to jinn and nature spirits that can swing either way.</p>
+          </div>
+        </article>
+
+        <!-- Card 4 -->
+        <article class="card" data-modal="m4">
+          <div class="thumb" style="background-image:url('https://cdn.britannica.com/25/26025-050-A8202932/Ravana-painting-Guler-Ramayana-Cleveland-Museum-of-1720.jpg')"></div>
+          <div class="glass">
+            <span class="chip tag">Lineage</span>
+            <h3>From Zoroastrianism to Abrahamic faiths</h3>
+            <p>How Persian angelology/demonology shaped Jewish, Christian, and Islamic ideas.</p>
+          </div>
+        </article>
+
+        <!-- Card 5 -->
+        <article class="card" data-modal="m5">
+          <div class="thumb" style="background-image:url('https://miro.medium.com/v2/1*0r0ZHcu5U8IJ5w3HwlGlHQ.jpeg')"></div>
+          <div class="glass">
+            <span class="chip tag">Fallen angels</span>
+            <h3>Lucifer, Satan & the seven</h3>
+            <p>Why some angels fall, classic archdemon lists, and what “possession” meant.</p>
+          </div>
+        </article>
+
+        <!-- Card 6 -->
+        <article class="card" data-modal="m6">
+          <div class="thumb" style="background-image:url('https://cdn.britannica.com/17/42517-050-859E2ECA/bodhisattvas-Guanyin-detail-mural-province-Tang-dynasty.jpg')"></div>
+          <div class="glass">
+            <span class="chip tag">East</span>
+            <h3>Hindu, Buddhist, Chinese & Japanese views</h3>
+            <p>Asuras, rakshasas, Māra, guei-shen, oni & tengu — the vibe check.</p>
+          </div>
+        </article>
+        
+        <!-- Highlight Showcase -->
+<div class="highlight-card">
+  <div class="highlight-inner">
+    <h3>✨ Lore Highlight</h3>
+    <p>
+      “Every culture tells the story of light versus shadow differently — 
+      but the struggle always reflects what they fear most.” 
+    </p>
+  </div>
+</div>
+        
+<!-- The Great Rebellion -->
+<article class="card" data-modal="m7">
+  <div class="thumb" style="background-image:url('https://static.wikia.nocookie.net/the-demonic-paradise/images/5/58/7124677b7e6bde441141f4c5dbb7c6ca.jpg/revision/latest?cb=20210806105153')"></div>
+  <div class="glass">
+    <span class="chip tag">Fall</span>
+    <h3>The Great Rebellion</h3>
+    <p>Lucifer, pride, the Watchers — when heaven cracked open.</p>
+  </div>
+</article>
+
+<!-- Demons of the Middle Ages -->
+<article class="card" data-modal="m8">
+  <div class="thumb" style="background-image:url('https://www.sublimehorror.com/wp-content/uploads/2019/03/medieval-representations-of-exorcism-in-art.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Ages</span>
+    <h3>Demons of the Middle Ages</h3>
+    <p>Exorcisms, grimoires, and the shadow of night terrors.</p>
+  </div>
+</article>
+
+<!-- Archangel Michael & the War -->
+<article class="card" data-modal="m9">
+  <div class="thumb" style="background-image:url('https://www.philipkosloski.com/wp-content/uploads/2018/02/684px-Guido_Reni_031.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">War</span>
+    <h3>Archangel Michael & the War</h3>
+    <p>The warrior angel who cast down the dragon in Revelation.</p>
+  </div>
+</article>
+
+<!-- The Watchers' Descent -->
+<article class="card" data-modal="m10">
+  <div class="thumb" style="background-image:url('https://www.thewaymissions.org/wp-content/uploads/2022/12/images-5.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Duty</span>
+    <h3>The Watchers' Descent</h3>
+    <p>Angels who descended to Earth, defying divine order.</p>
+  </div>
+</article>
+
+<!-- Necromancy in the Middle Ages -->
+<article class="card" data-modal="m11">
+  <div class="thumb" style="background-image:url('https://theravenreport.com/wp-content/uploads/2017/03/magician.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Occult</span>
+    <h3>Necromancy in the Middle Ages</h3>
+    <p>Practices of summoning spirits and communicating with the dead.</p>
+  </div>
+</article>
+
+<!-- The Fall of the Rebel Angels -->
+<article class="card" data-modal="m12">
+  <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/9/9d/Pieter_Bruegel_the_Elder_-_The_Fall_of_the_Rebel_Angels_-_RMFAB_584_%28derivative_work%29.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Fall</span>
+    <h3>The Fall of the Rebel Angels</h3>
+    <p>The celestial battle that led to the expulsion of the fallen angels.</p>
+  </div>
+</article>
+
+<!-- Exorcism Rituals in Medieval Europe -->
+<article class="card" data-modal="m13">
+  <div class="thumb" style="background-image:url('https://images.theconversation.com/files/250720/original/file-20181214-185268-dv5mox.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=926&fit=clip')"></div>
+  <div class="glass">
+    <span class="chip tag">Rituals</span>
+    <h3>Exorcism Rituals in Medieval Europe</h3>
+    <p>Traditional methods used to expel demons and evil spirits.</p>
+  </div>
+</article>
+
+<!-- The Demonization of the Other -->
+<article class="card" data-modal="m14">
+  <div class="thumb" style="background-image:url('https://i0.wp.com/blog.artsper.com/wp-content/uploads/2021/09/francisco-de-goya-wikipedia.jpg?w=448&ssl=16&fit=clip')"></div>
+  <div class="glass">
+    <span class="chip tag">Culture</span>
+    <h3>The Demonization of the Other</h3>
+    <p>How different cultures have portrayed outsiders as demonic.</p>
+  </div>
+</article>
+
+<div class="highlight-card">
+  <div class="highlight-inner">
+    <h3>📜 Timeline</h3>
+    <p>
+      Heaven ➝ Rebellion ➝ The Watchers ➝ Flood ➝ Medieval Demonology ➝ Modern Myths
+    </p>
+  </div>
+</div>
+
+<div class="highlight-card">
+  <div class="highlight-inner">
+    <h3>🌀 The Untold Journey of Angels & Demons</h3>
+    <p>One of my fav videos. you can watch it right here without leaving the site 👇</p>
+    <div class="video-wrapper">
+      <iframe 
+        src="https://youtube.com/watch?v=ZjLguFf7PH8" 
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+</div>
+
+
+<!-- Mazzikin – Invisible Mischief Makers -->
+<article class="card" data-modal="m15">
+  <div class="thumb" style="background-image:url('https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/9acfada5-1f4a-40ab-99bf-8c5ac37a66e6/uploads/images/b63500c3ce587e07f2c0ad8151950731.png')"></div>
+  <div class="glass">
+    <span class="chip tag">Jewish</span>
+    <h3>Mazzikin — Invisible Mischief Makers</h3>
+    <p>From Talmudic tales, spirits that peek and mess with you—sometimes more than just mischief.</p>
+  </div>
+</article>
+
+<!-- Harut & Marut – Fallen Teachers -->
+<article class="card" data-modal="m16">
+  <div class="thumb" style="background-image:url('https://pbs.twimg.com/media/FVUmLW9UUAAXBg8.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Islamic</span>
+    <h3>Harut & Marut — Fallen Teachers</h3>
+    <p>Two angels who taught magic after succumbing to earthly temptation—they’re a cautionary tale.</p>
+  </div>
+</article>
+
+<!-- Succubus & Incubus – Dream Demons -->
+<article class="card" data-modal="m17">
+  <div class="thumb" style="background-image:url('https://www.arthistoryproject.com/site/assets/files/36349/henry_fuseli-the_incubus_leaving_two_young_women-1794-obelisk-art-history-1.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Folklore</span>
+    <h3>Succubus & Incubus — Dream Demons</h3>
+    <p>Nighttime beings that seduce humans in dreams—sometimes spawning a cambion (a half-demon child).</p>
+  </div>
+</article>
+
+<!-- Nephilim – Giants of Old -->
+<article class="card" data-modal="m18">
+  <div class="thumb" style="background-image:url('https://www.ancient-origins.net/sites/default/files/styles/article_image/public/field/image/nephilim-giants.jpg?itok=GRJvnPPF')"></div>
+  <div class="glass">
+    <span class="chip tag">Myth</span>
+    <h3>Nephilim — Giants of Old</h3>
+    <p>Offspring of divine beings and humans—stories say they roamed the earth as giants before the Flood.</p>
+  </div>
+</article>
+
+<!-- Ancient Angelic Hierarchy Fact -->
+<article class="card" data-modal="m19">
+  <div class="thumb" style="background-image:url('https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Francesco_Botticini_-_The_Assumption_of_the_Virgin.jpg/960px-Francesco_Botticini_-_The_Assumption_of_the_Virgin.jpg')"></div>
+  <div class="glass">
+    <span class="chip tag">Hierarchy</span>
+    <h3>Angelic Order Fact</h3>
+    <p>The Bible implies different ranks: seraphim, cherubim, archangels, with duties ranging from worship to protection.</p>
+  </div>
+</article>
+
+<div class="highlight-card">
+  <div class="highlight-inner">
+    <h3>⚔️ Spotlight: Archangel Gabriel</h3>
+    <p>
+      Known as the divine messenger — Gabriel delivers revelation in Jewish, Christian, and Islamic texts.
+    </p>
+  </div>
+</div>
+
+
+      </div>
+    </section>
+
+    <!-- MODALS -->
+    <dialog id="m1">
+      <div class="modal-head">
+        <strong>What are “angels” & “demons”?</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://as1.ftcdn.net/jpg/06/10/30/82/1000_F_610308232_eLceQK1IlxqP3SH7RFlHQ1ctBaMpadBs.webp" alt=""></div>
+        <p>
+          In religion and folklore, angels and demons are intermediary beings that sit between the divine/sacred realm and
+          everyday human life. In Western traditions, <em>angel</em> (Greek <em>angelos</em>, “messenger”) emphasizes function:
+          carrying messages, guarding, guiding, praising, or executing divine will. <em>Demon</em> comes from Greek <em>daimōn</em>,
+          originally a neutral “spirit” that could influence a person’s character; over time in many traditions the term skewed
+          malevolent. Not all cultures keep the good/evil split—some spirits help or harm depending on context. 0
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="m2">
+      <div class="modal-head">
+        <strong>Cosmic models & spirit types</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://static.wikia.nocookie.net/unnaturalworld/images/9/9d/Biblic_Angels.jpeg/revision/latest?cb=20231226052513" alt=""></div>
+        <h4>How the “map of the cosmos” shapes the roster</h4>
+        <p>
+          Beliefs about spirits mirror beliefs about the universe. In some Western views, a tripartite cosmos (heaven/earth/underworld)
+          hosts celestial angels and aerial spirits. Dualistic models pit forces/persons of good against evil. Monistic approaches
+          view all reality as an expression of a single principle, with spirits framed more as functions than factions. 1
+        </p>
+        <h4>What kinds of beings show up?</h4>
+        <p>
+          Besides angels and demons, traditions mention ghosts, goblins, nature spirits, fairies, and hybrid beings.
+          Their status (helpful or hostile) often depends on their alignment with the Supreme Being—or on local ritual relationships. 2
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="m3">
+      <div class="modal-head">
+        <strong>Benevolent • Malevolent • Ambivalent</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/54/Nachtmahr_%28Abildgaard%29.jpg/960px-Nachtmahr_%28Abildgaard%29.jpg" alt=""></div>
+        <h4>Benevolent beings</h4>
+        <p>
+          Angels assist: revealing truths, guarding people and nations, escorting souls, and—per popular piety—watching over children.
+          Classic examples include the archangels Gabriel, Michael, Raphael, and Uriel in various canons. 3
+        </p>
+        <h4>Malevolent beings</h4>
+        <p>
+          Demons, fallen angels, and hostile spirits obstruct proper relationship with the divine and can be linked in lore to calamity,
+          temptation, and disorder. Visual culture often depicts them as hybrid or monstrous to warn or ward off. 4
+        </p>
+        <h4>Ambivalent / neutral beings</h4>
+        <p>
+          Islam explicitly includes jinn—beings of smokeless fire—who can help or harm; many nature spirits in nonliterate traditions
+          are treated as neutral and “made friendly” through ritual. 5
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="m4">
+      <div class="modal-head">
+        <strong>From Zoroastrianism to Abrahamic faiths</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://cdn.britannica.com/94/5594-050-1C1166D6/Annunciation-Fra-Angelico-Florence-Museum-of-San.jpg" alt=""></div>
+        <p>
+          Early Zoroastrianism names a heptad of holy “bounteous immortals” (<em>amesha spentas</em>) aligned with Ahura Mazdā;
+          against them stands Angra Mainyu (Ahriman) and the <em>daevas</em>. Jewish and later Christian and Islamic thought interacted
+          with Persian ideas during/after the Babylonian Exile, enriching hierarchies of angels (e.g., nine choirs in later Christian
+          mysticism) and sharpening demonology (Satan gaining the role of arch-adversary). 6
+        </p>
+        <p>
+          Named figures include Michael and Gabriel (canon), with Raphael and Uriel in certain apocrypha; folk practice adds charms
+          and amulets to counter unclean spirits. 7
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="m5">
+      <div class="modal-head">
+        <strong>Lucifer, Satan & the seven</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://miro.medium.com/v2/1*0r0ZHcu5U8IJ5w3HwlGlHQ.jpeg" alt=""></div>
+        <p>
+          In many Christian retellings, pride or rebellion explains the “fall” of angels (Lucifer → Satan). Medieval demonology often lists
+          seven archdemons mapped to the seven deadly sins: Lucifer (Pride), Mammon (Avarice), Asmodeus (Lust), Satan (Wrath), Beelzebub
+          (Gluttony), Leviathan (Envy), Belphegor (Sloth). Demons tempt, deceive, and—per older views—afflict with calamities or possession. 8
+        </p>
+        <p>
+          Related topics: Beelzebub as a demonized Philistine deity; the Nephilim tradition linking “sons of God” and human women in some
+          interpretations (esp. 1 Enoch). 9
+        </p>
+      </div>
+    </dialog>
+
+    <dialog id="m6">
+      <div class="modal-head">
+        <strong>Hindu, Buddhist, Chinese & Japanese views</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-hero"><img src="https://cdn.britannica.com/17/42517-050-859E2ECA/bodhisattvas-Guanyin-detail-mural-province-Tang-dynasty.jpg" alt=""></div>
+        <p>
+          In South and East Asia, “angel-like” work is often handled by avatars and bodhisattvas—agents that extend sacred action into the world.
+          Hindu myths set <em>asuras</em> against <em>devas</em>, with episodes like the amrita contest (Vishnu as Mohini). Demons that harass humans
+          include <em>rakshasas</em> and <em>pishachas</em>. In Buddhism, Māra tempts the Buddha; later traditions absorb local spirit catalogues. Chinese
+          religion speaks of <em>guei-shen</em> across nature; Japanese lore features powerful <em>oni</em> and possessive <em>tengu</em>. 10
+        </p>
+      </div>
+    </dialog>
+    
+    <dialog id="m7">
+  <div class="modal-head">
+    <strong>The Great Rebellion</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://static.wikia.nocookie.net/the-demonic-paradise/images/5/58/7124677b7e6bde441141f4c5dbb7c6ca.jpg/revision/latest?cb=20210806105153" alt="">
+    </div>
+    <p>
+      At the center of angelic lore stands the rebellion: a cosmic fracture in the heavenly order. 
+      The most famous tale is of Lucifer, the “light-bearer,” whose pride and refusal to submit marked the birth of the fallen. 
+      Jewish texts also preserve the legend of the <em>Watchers</em>, angels who descended to Earth, took human wives, and spawned giants. 
+      Their corruption set the stage for divine judgment, echoing across later Christian and Islamic demonologies.
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m8">
+  <div class="modal-head">
+    <strong>Demons of the Middle Ages</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://www.sublimehorror.com/wp-content/uploads/2019/03/medieval-representations-of-exorcism-in-art.jpg" alt="">
+    </div>
+    <p>
+      In the medieval imagination, demons were not abstract — they stalked daily life. 
+      Sleep paralysis was blamed on <em>incubi</em> and <em>succubi</em>, spirits said to feed on desire and fear. 
+      Monastic texts detail fierce exorcisms, while grimoires like the <em>Key of Solomon</em> circulated lists of infernal names and sigils. 
+      The age blurred theology with folklore, creating a Europe where angels guarded monasteries and demons whispered through the dark forests.
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m9">
+  <div class="modal-head">
+    <strong>Archangel Michael & the War</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://www.philipkosloski.com/wp-content/uploads/2018/02/684px-Guido_Reni_031.jpg" alt="">
+    </div>
+    <p>
+      Michael, “who is like God,” emerges in Jewish, Christian, and Islamic texts as the cosmic general. 
+      In the Book of Revelation, he leads heaven’s armies against the dragon — a symbol of Satan and his host. 
+      Artistic depictions show him armored, wings blazing, sword in hand. To many traditions, he embodies divine justice, 
+      not just a protector of souls but the very figure who ensures evil is cast down forever.
+    </p>
+  </div>
+</dialog>
+
+<!-- The Watchers' Descent Modal -->
+<dialog id="m10">
+  <div class="modal-head">
+    <strong>The Watchers' Descent</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://www.thewaymissions.org/wp-content/uploads/2022/12/images-5.jpg" alt="">
+    </div>
+    <p>
+      In ancient texts, the Watchers were angels who descended to Earth, attracted by the beauty of human women. Their union led to the birth of the Nephilim, giants who were said to have corrupted humanity. This act of defiance against divine order resulted in their punishment and imprisonment.
+    </p>
+  </div>
+</dialog>
+
+<!-- Necromancy in the Middle Ages Modal -->
+<dialog id="m11">
+  <div class="modal-head">
+    <strong>Necromancy in the Middle Ages</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://theravenreport.com/wp-content/uploads/2017/03/magician.jpg" alt="">
+    </div>
+    <p>
+      Necromancy, the practice of communicating with the dead, was prevalent in medieval Europe. Grimoires like the Picatrix and the Sworn Book of Honorius detailed rituals to summon spirits and seek knowledge from the afterlife. These practices were often condemned by the Church but remained popular among certain circles.
+    </p>
+  </div>
+</dialog>
+
+<!-- The Fall of the Rebel Angels Modal -->
+<dialog id="m12">
+  <div class="modal-head">
+    <strong>The Fall of the Rebel Angels</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Pieter_Bruegel_the_Elder_-_The_Fall_of_the_Rebel_Angels_-_RMFAB_584_%28derivative_work%29.jpg" alt="">
+    </div>
+    <p>
+      The rebellion in heaven, led by Lucifer, resulted in a celestial war. Michael and his angels fought against the dragon and his followers. The battle culminated in the expulsion of the rebels from heaven, a pivotal moment that shaped the cosmic order and the eternal struggle between good and evil.
+    </p>
+  </div>
+</dialog>
+
+<!-- Exorcism Rituals in Medieval Europe Modal -->
+<dialog id="m13">
+  <div class="modal-head">
+    <strong>Exorcism Rituals in Medieval Europe</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://images.theconversation.com/files/250720/original/file-20181214-185268-dv5mox.jpg?ixlib=rb-4.1.0&q=45&auto=format&w=926&fit=clip" alt="">
+    </div>
+    <p>
+      Exorcism rituals in medieval Europe were elaborate ceremonies conducted to expel demons from the possessed. These rituals often involved prayers, holy water, and the use of relics. The Church played a central role in these practices, and successful exorcisms were seen as signs of divine intervention.
+    </p>
+  </div>
+</dialog>
+
+<!-- The Demonization of the Other Modal -->
+<dialog id="m14">
+  <div class="modal-head">
+    <strong>The Demonization of the Other</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://i0.wp.com/blog.artsper.com/wp-content/uploads/2021/09/francisco-de-goya-wikipedia.jpg?w=448&ssl=1" alt="">
+    </div>
+    <p>
+      Throughout history, societies have often portrayed outsiders—be they different in culture, religion, or appearance—as demonic. This demonization served to justify exclusion, persecution, and violence. Understanding this pattern helps in recognizing and combating prejudice in modern times.
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m15">
+  <div class="modal-head">
+    <strong>Mazzikin — Invisible Mischief Makers</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://wa-cdn.nyc3.cdn.digitaloceanspaces.com/user-data/production/9acfada5-1f4a-40ab-99bf-8c5ac37a66e6/uploads/images/b63500c3ce587e07f2c0ad8151950731.png" alt="Mazzikin art">
+    </div>
+    <p>
+      In Jewish Talmudic lore, <strong>mazzikin</strong> are invisible demons whose name means “damagers” or “those who harm.” They can create nuisances or outright dangers in daily life—everything from tripping you to whispering terrifying messages. One Talmudic sage claimed every person is flanked by thousands of them. Ancient protective magic like incantation bowls were designed to ward them off. 0
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m16">
+  <div class="modal-head">
+    <strong>Harut & Marut — Fallen Teachers</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://pbs.twimg.com/media/FVUmLW9UUAAXBg8.jpg" alt="Harut and Marut art">
+    </div>
+    <p>
+      In Islamic tradition, Harut and Marut were angels sent to test humanity by teaching magic on Earth—but they too were swayed by temptation. Earthly desires broke their angelic grace. They chose earthly punishment rather than spiritual exile, offering a moral tale about temptation and responsibility. 1
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m17">
+  <div class="modal-head">
+    <strong>Succubus & Incubus — Dream Demons</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://www.arthistoryproject.com/site/assets/files/36349/henry_fuseli-the_incubus_leaving_two_young_women-1794-obelisk-art-history-1.jpg" alt="Incubus art">
+    </div>
+    <p>
+      In folklore, an <strong>incubus</strong> is a male demon that visits sleeping women, while a <strong>succubus</strong> is the female counterpart, seducing men in dreams. These entities drain vitality—sometimes to the point of death—and in myth, their unions with humans could produce a hybrid known as a <em>cambion</em>. 2
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m18">
+  <div class="modal-head">
+    <strong>Nephilim — Giants of Old</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://www.ancient-origins.net/sites/default/files/styles/article_image/public/field/image/nephilim-giants.jpg?itok=GRJvnPPF" alt="Nephilim art">
+    </div>
+    <p>
+      The <strong>Nephilim</strong> are mythical figures described as the offspring of “sons of God” (interpreted as angels) and human women. Known as giants or “fallen ones,” they feature in biblical accounts and later legends, sparking endless fascination in literature, gaming, and pop culture. 3
+    </p>
+  </div>
+</dialog>
+
+<dialog id="m19">
+  <div class="modal-head">
+    <strong>Angelic Order Fact</strong>
+    <button class="btn" data-close>Close</button>
+  </div>
+  <div class="modal-body">
+    <div class="modal-hero">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Francesco_Botticini_-_The_Assumption_of_the_Virgin.jpg/960px-Francesco_Botticini_-_The_Assumption_of_the_Virgin.jpg" alt="Angelic hierarchy">
+    </div>
+    <p>
+      Biblical texts imply that angels are ranked—from fiery <em>seraphim</em> to majestic <em>cherubim</em> and authoritative <em>archangels</em>. Each rank carries a different role: worship, protection, guidance. This structure permeates theological writings and art. 4
+    </p>
+  </div>
+</dialog>
+
+
+<!-- Update Notice -->
+<span class="update-msg">
+  Site is updating day-by-day. Right now, this is it. Thanks for checking!
+  <button class="close-btn" onclick="this.parentElement.style.display='none'">&times;</button>
+</span>
+
+<style>
+.update-msg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem;
+  padding: 0.6rem 1rem;
+  background: var(--glass);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(12px);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  color: var(--text);
+  max-width: 100%;
+  margin: 1rem auto;
+}
+
+.update-msg .close-btn {
+  background: none;
+  border: none;
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0;
+}
+</style>
+
+
+
+
+
+
+    <!-- ABOUT SITE -->
+    <dialog id="about">
+      <div class="modal-head">
+        <strong>About this project</strong>
+        <button class="btn" data-close>Close</button>
+      </div>
+      <div class="modal-body">
+        <p>
+          This is my journal notebook on “intermediary beings.” I paraphrased and combined material from Britannica’s
+          multi-section article on <em>angel and demon</em> plus related entries so you can read everything here in one scroll.
+          Source snapshots are credited below. No AI-copypasta — just original summaries sourced with citations.
+        </p>
+        <h4>Primary sources I used</h4>
+        <ul>
+          <li>Britannica — <em>Angel and demon</em> overview and sections on types, cosmic models, varieties, and Eastern religions. 11</li>
+          <li>Related Britannica entries for context (e.g., Beelzebub; Nephilim). 12</li>
+        </ul>
+      </div>
+    </dialog>
+
+    <!-- CREDIT -->
+    <section class="wrap">
+      <div class="credit">
+        <div>created by <strong>Yakashi</strong> — see my portfolio for more.</div>
+        <div id="copy">&copy; <span id="year"></span> <a href="https://yakadevportfolio.netlify.app" target="_blank" rel="noopener">Yasas Vishmitha</a> • All rights reserved.</div>
+      </div>
+      <footer>
+        <small>Image credits: images hot-linked from Britannica articles and open sources (google) for educational commentary. educational purposes only!</small>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Scroll to top -->
+  <button id="toTop" aria-label="Scroll to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+      <path d="M12 19V5"></path><path d="M5 12l7-7 7 7"></path>
+    </svg>
+  </button>
+
+  <script>
+    // theme toggle
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const stored = localStorage.getItem('theme');
+    if(stored==='light'){ document.body.classList.add('theme-light'); }
+    themeBtn.addEventListener('click', ()=>{
+      document.body.classList.toggle('theme-light');
+      localStorage.setItem('theme', document.body.classList.contains('theme-light')?'light':'dark');
+      themeBtn.blur();
+    });
+
+    // open/close modals from cards
+    const cards = document.querySelectorAll('.card[data-modal]');
+    const modals = document.querySelectorAll('dialog');
+    cards.forEach(c=>{
+      c.addEventListener('click', ()=>{
+        document.getElementById(c.dataset.modal).showModal();
+      });
+    });
+    modals.forEach(m=>{
+      m.addEventListener('click', (e)=>{ // click outside closes
+        const rect = m.getBoundingClientRect();
+        if(e.clientY < rect.top || e.clientY > rect.bottom || e.clientX < rect.left || e.clientX > rect.right){
+          m.close();
+        }
+      });
+      m.querySelectorAll('[data-close]').forEach(b=>b.addEventListener('click', ()=>m.close()));
+    });
+
+    // about modal
+    document.getElementById('aboutBtn').addEventListener('click', ()=>document.getElementById('about').showModal());
+
+    // scroll to top button
+    const toTop = document.getElementById('toTop');
+    const onScroll = ()=>{
+      if(window.scrollY > 300){ toTop.classList.add('show'); }
+      else { toTop.classList.remove('show'); }
+    };
+    window.addEventListener('scroll', onScroll);
+    toTop.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
+
+    // year
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!--
+    Notes:
+    - Content is paraphrased from Britannica:
+      * Overview: https://www.britannica.com/topic/angel-religion
+      * Types: https://www.britannica.com/topic/angel-religion/Types-of-angels-and-demons
+      * Varieties: https://www.britannica.com/topic/angel-religion/Varieties-of-angels-and-demons-in-the-religions-of-the-world
+      * East: https://www.britannica.com/topic/angel-religion/In-the-religions-of-the-East
+      * Beelzebub: https://www.britannica.com/topic/Beelzebub
+      * Nephilim: https://www.britannica.com/topic/Nephilim
+    - Images are embedded directly from Britannica’s CDN to match article art.
+  -->
+</body>
+</html>
