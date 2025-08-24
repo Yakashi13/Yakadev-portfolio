@@ -78,12 +78,15 @@
     }
     .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px}
     .chip{
-      display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
-      background: var(--card-strong); backdrop-filter: blur(var(--blur));
-      border: var(--panel-border); box-shadow: var(--ring);
-      font-size: 13px; color: var(--muted);
-      white-space:nowrap;
-    }
+  display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px;
+  background: var(--card-strong); backdrop-filter: blur(var(--blur));
+  border: var(--panel-border); box-shadow: var(--ring);
+  font-size: 13px; color: var(--muted);
+  white-space:nowrap;
+  overflow:hidden;              /* prevent spill */
+  text-overflow:ellipsis;       /* show "…" */
+  max-width:160px;              /* tune as needed */
+}
 
     main{
       max-width:1200px; margin: 20px auto; padding: 0 clamp(12px, 3vw, 28px) 60px;
@@ -138,7 +141,18 @@
     .todo input{flex:1; padding:10px 12px; border-radius:12px; border: var(--panel-border); background: var(--card-strong); color: var(--text)}
     .todo button{padding:10px 12px}
 
-    .kv{display:grid; grid-template-columns: 1fr auto; gap:8px; font-size:14px}
+    .kv{
+  display:grid;
+  grid-template-columns: 1fr 2fr;  /* left label, right value with more space */
+  gap:8px;
+  font-size:14px;
+  word-break: break-word;         /* wrap long strings */
+}
+.kv .v{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  word-wrap:break-word;
+}
     .kv .k{color:var(--muted)}
 
     .news{display:grid; gap:10px; max-height:320px; overflow:auto; padding-right:4px}
@@ -156,6 +170,12 @@
       .wallpaper img{transition:none}
       .btn, .switch{transition:none}
     }
+    
+    @media (max-width: 600px){
+  .bar { flex-direction: column; align-items: flex-start; }
+  .toolbar { width: 100%; justify-content: space-between; flex-wrap: wrap; }
+  .chip { max-width: 100%; } /* let chips shrink properly */
+}
   </style>
 </head>
 <body class="dark">
