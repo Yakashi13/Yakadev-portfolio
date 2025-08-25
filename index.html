@@ -783,9 +783,8 @@ footer {
   </svg>
 </h1>
   
-        <div class="roles">• Web & Software Designer, Developer •</div>
-        <div class="roles">• Self-taught Video Editor & Graphic Designer •</div>
-        <div class="badge" title="Sri Lanka">🇱🇰 Sri Lanka • Always curious • AI + Design</div>
+        <div class="roles">⦁ Ui/UX developer & designer ⦁ <br>⦁ Software developer ⦁ <br>⦁ Self-taught graphic designer ⦁</div>
+        <div class="badge" title="Sri Lanka">🇱🇰 Sri Lanka • Always curious • AI + Design ⦁ Creative</div>
         <div class="socials" aria-label="Social links">
           <a class="btn" style="--accent: #0866ff" href="https://www.facebook.com/share/1E1qaxnBtG/" target="_blank" rel="noopener">
             <!-- Facebook solid icon -->
@@ -812,18 +811,23 @@ footer {
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9.04 15.56l-.35 4.94c.5 0 .72-.22.98-.48l2.36-2.27 4.88 3.57c.9.5 1.53.24 1.77-.83l3.21-15.03c.29-1.36-.49-1.9-1.36-1.56L1.88 9.3C.56 9.82.58 10.57 1.66 10.9l4.97 1.55 11.56-7.3c.54-.36 1.03-.16.63.2l-9.78 10.22z"/></svg>
             Telegram
           </a>
-          <a class="btn" style="--accent:#e63946" 
-   a href="https://drive.google.com/uc?export=download&id=13dT1yT1xAcpywhDlQY46t5eHPuj5YqTR"
-   download>
+          <a class="btn" style="--accent:#e63946" id="cvBtn">
   <!-- File/Resume solid icon -->
   <svg class="icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 
-             2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 
-             18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 
+    <path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 
+             1.1.9 2 2 2h12c1.1 0 2-.9 
+             2-2V8l-6-6zm2 18H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 
              9H13z"/>
   </svg>
   Get CV
 </a>
+
+<script>
+  document.getElementById('cvBtn').addEventListener('click', () => {
+    const url = 'https://drive.google.com/uc?export=download&id=1cbffRtS4iciZwlusuMRGUxIeNJIvaWZQ';
+    window.location.href = url;
+  });
+</script>
         </div>
       </div>
     </section>
@@ -994,7 +998,7 @@ footer {
             <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M12 3a9 9 0 100 18 9 9 0 000-18zM11 7h2v6h-2V7zm0 8h2v2h-2v-2z"/>
             </svg>
-            Dashboard UI system - apple style. 
+            Simple yet modern CRUD system. 
           </button>
         </div>
       </li>
@@ -1287,15 +1291,15 @@ footer {
   <div class="card">
     <h2 class="section-title">
       <svg class="icon" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5h18v14H3V5zm2 2v10h14V7H5z"/></svg>
-      Contact / DM for your opportunity!
+      Open for your opportunity!
     </h2>
     <div class="contact-row">
       <div>
-        <strong>📱 WhatsApp</strong>
+        <strong>📱 WhatsApp (message)</strong>
         <div><a href="https://wa.me/qr/ELN7ZKTYGX57F1" target="_blank" rel="noopener">SEND ME 80085</a></div>
       </div>
       <div>
-        <strong>📩 Mail for me</strong>
+        <strong>📩 Send Mails</strong>
         <div><a href="mailto:yasas13.dev@gmail.com">SEND-ME@80085.com</a></div>
       </div>
       <div>
@@ -1347,7 +1351,8 @@ footer {
   ↑
 </button>
 
-<div class="highlight-card">
+<section id="card">
+   <div class="highlight-card">
   <div class="highlight-inner finish-card">
     <div class="gif-box">
       <img src="https://i.giphy.com/kURboTnfVpf9XdSWWT.webp" alt="funny gif">
@@ -1355,6 +1360,7 @@ footer {
     <h3>aho!!</h3>
   </div>
 </div>
+</section>
 
 <footer>
   <small>© <span id="year"></span> Yasas Vishmitha • All rights reserved.<span title="Indigo, Electric Blue, Crimson, White"></span></small>
